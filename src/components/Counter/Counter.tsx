@@ -1,7 +1,6 @@
 import { IonCol, IonRow } from '@ionic/react';
 import React, { ReactElement, useCallback } from 'react';
 import ButtonCounter from '../Button/ButtonCounter';
-import './ExploreContainer.css';
 
 type CounterInput = {
   onClick: (value: number)=>void;

@@ -1,7 +1,6 @@
 import React from 'react';
-import { useCounter } from './HooksCounter';
+import { useCounter } from '../../hooks/HooksCounter';
 import Counter from './Counter';
-import './ExploreContainer.css';
 import { IonItem, IonLabel } from '@ionic/react';
 import { CounterCode, OnChangeCounter } from '../../types/CounterType';
 

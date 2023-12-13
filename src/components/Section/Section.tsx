@@ -1,7 +1,6 @@
 import { IonCard, IonCardHeader, IonGrid } from '@ionic/react';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import CounterHandler, { CounterHandlerInput_CounterParams, CounterHandlerInput_OnChange } from '../Counter/CounterHandler';
-import './ExploreContainer.css';
 import { OnChangeCounterinput } from '../../types/CounterType';
 
 type SectionInput =  CounterHandlerInput_OnChange & {
