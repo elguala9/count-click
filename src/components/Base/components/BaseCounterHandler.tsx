@@ -3,18 +3,24 @@ import { useCounter } from '../hooks';
 import BaseCounter from './BaseCounter';
 import './ExploreContainer.css';
 import { IonItem, IonLabel } from '@ionic/react';
+import { CounterCode, OnChangeCounter } from '../../../types/CounterType';
 
-type BaseCounterHandlerInput = {
-  onChange: (newValue: number, change: number)=>void;
+export type BaseCounterHandlerInput_CounterParams = {
   counterValue: number;
   counterLabel: string;
-  counterCode:string;
+  counterCode: CounterCode;
 }
+
+export type BaseCounterHandlerInput_OnChange = {
+  onChange: OnChangeCounter;
+}
+
+
+type BaseCounterHandlerInput = BaseCounterHandlerInput_CounterParams & BaseCounterHandlerInput_OnChange;
 
 const BaseCounterHandler: React.FC<BaseCounterHandlerInput> = ({counterCode, counterLabel, counterValue, onChange}) => {
 
-  const {count, onClick} = useCounter(counterValue, onChange);
-
+  const {count, onClick} = useCounter(counterCode, counterValue, onChange);
 
   return (
     <BaseCounter onClick={onClick}>
