@@ -1,15 +1,15 @@
 import { IonCol, IonRow } from '@ionic/react';
 import React, { ReactElement, useCallback } from 'react';
-import BaseButtonCounter from './BaseButtonCounter';
+import ButtonCounter from '../Button/ButtonCounter';
 import './ExploreContainer.css';
 
-type BaseCounterInput = {
+type CounterInput = {
   onClick: (value: number)=>void;
   children: ReactElement;
 }
 
 // structure of a counter. In this component we will be abel to see the counter and the buttons to change the counter
-const BaseCounter: React.FC<BaseCounterInput> = ({children, onClick}) => {
+const Counter: React.FC<CounterInput> = ({children, onClick}) => {
 
   const onClickMinus = useCallback(()=>{
     onClick(-1);
@@ -22,16 +22,16 @@ const BaseCounter: React.FC<BaseCounterInput> = ({children, onClick}) => {
   return (
     <IonRow>
       <IonCol>
-        <BaseButtonCounter onClick={onClickMinus}/>
+        <ButtonCounter onClick={onClickMinus}/>
       </IonCol>
       <IonCol>
         {children}
       </IonCol>
       <IonCol>
-        <BaseButtonCounter onClick={onClickPlus}/>
+        <ButtonCounter onClick={onClickPlus}/>
       </IonCol>
     </IonRow>
   );
 };
 
-export default BaseCounter;
+export default Counter;

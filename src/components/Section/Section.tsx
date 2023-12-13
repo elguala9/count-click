@@ -1,19 +1,19 @@
 import { IonCard, IonCardHeader, IonGrid } from '@ionic/react';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import BaseCounterHandler, { BaseCounterHandlerInput_CounterParams, BaseCounterHandlerInput_OnChange } from './BaseCounterHandler';
+import CounterHandler, { CounterHandlerInput_CounterParams, CounterHandlerInput_OnChange } from '../Counter/CounterHandler';
 import './ExploreContainer.css';
-import { OnChangeCounterinput } from '../../../types/CounterType';
+import { OnChangeCounterinput } from '../../types/CounterType';
 
-type BaseSectionInput =  BaseCounterHandlerInput_OnChange & {
-  counterInput: BaseCounterHandlerInput_CounterParams[];
+type SectionInput =  CounterHandlerInput_OnChange & {
+  counterInput: CounterHandlerInput_CounterParams[];
   children?: ReactElement;
 }
 
 // A section that contain all the information about the counters and the actual counter
 // The children can be another section. Usefull if we ahve counters nidificated
-const BaseSection: React.FC<BaseSectionInput> = ({counterInput, onChange, children}) => {
+const Section: React.FC<SectionInput> = ({counterInput, onChange, children}) => {
 
-  const [baseCounterHandlers, setBaseCounterHandler] = useState<ReactElement<typeof BaseCounterHandler[]>>();
+  const [baseCounterHandlers, setCounterHandler] = useState<ReactElement<typeof CounterHandler[]>>();
   const [counter, setCounter] = useState<number>();
 
   const _onChange = useCallback((input: OnChangeCounterinput)=>{
@@ -25,7 +25,7 @@ const BaseSection: React.FC<BaseSectionInput> = ({counterInput, onChange, childr
     const _baseCounterHandlers: ReactElement[] = [];
     for(let i=0; i < counterInput.length; i++)
       _baseCounterHandlers.push(
-        <BaseCounterHandler 
+        <CounterHandler 
           counterCode={counterInput[i].counterCode} 
           counterLabel={counterInput[i].counterLabel} 
           counterValue={counterInput[i].counterValue} 
@@ -33,11 +33,11 @@ const BaseSection: React.FC<BaseSectionInput> = ({counterInput, onChange, childr
           key={i}/>
         );
       
-    setBaseCounterHandler(
+    setCounterHandler(
       <>
         {_baseCounterHandlers}
       </>);
-  }, [setBaseCounterHandler]);
+  }, [setCounterHandler]);
 
   return (
     <IonCard>
@@ -53,4 +53,4 @@ const BaseSection: React.FC<BaseSectionInput> = ({counterInput, onChange, childr
   );
 };
 
-export default BaseSection;
+export default Section;
