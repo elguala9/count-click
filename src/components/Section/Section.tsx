@@ -35,7 +35,7 @@ const Section: React.FC<SectionInput> = ({counterInput, onChange}) => {
       <>
         {_baseCounterHandlers}
       </>);
-  }, [setCounterHandler]);
+  }, [_onChange, counterInput, setCounterHandler]);
 
   return (
     <IonCard>
