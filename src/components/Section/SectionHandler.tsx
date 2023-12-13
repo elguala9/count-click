@@ -1,6 +1,4 @@
-import { IonLoading } from '@ionic/react';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { useRetiveSection } from '../../hooks/HooksData';
+import React, { useCallback, useEffect, useState } from 'react';
 import { OnChangeCounterinput, SectionCode } from '../../types/CounterType';
 import { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
 import Section from './Section';
@@ -14,7 +12,7 @@ type SectionHandlerInput =  {
 const SectionHandler: React.FC<SectionHandlerInput> = ({sectionCode}) => {
 
   const [totalCount, setTotalCount] = useState<number>(0);
-  const { countCodes, loadingRetriveSection} = useRetiveSection(sectionCode);
+  //const { countCodes, loadingRetriveSection} = useRetiveSection(sectionCode);
 
   const _onChange = useCallback((input: OnChangeCounterinput)=>{
     setTotalCount((totalCount)=>totalCount+input.change)
@@ -27,8 +25,8 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({sectionCode}) => {
     }*/
   }, [])
 
-  if(loadingRetriveSection)
-    return <IonLoading/>
+  /*if(loadingRetriveSection)
+    return <IonLoading/>*/
 
   const obj: CounterHandlerInput_CounterParams = {
     counterCode: "xxx",
