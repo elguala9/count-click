@@ -1,12 +1,12 @@
 import React from 'react';
 import { IonButton } from '@ionic/react';
 
-type BaseButtonInput = {
+type BaseButtonCounterInput = {
   onClick: React.MouseEventHandler<HTMLIonButtonElement>;
   label?: string;
 }
 
-const BaseButton: React.FC<BaseButtonInput> = ({onClick, label}) => {
+const BaseButtonCounter: React.FC<BaseButtonCounterInput> = ({onClick, label}) => {
   return (
     <IonButton onClick={onClick}>
       {label}
@@ -14,4 +14,4 @@ const BaseButton: React.FC<BaseButtonInput> = ({onClick, label}) => {
   );
 };
 
-export default BaseButton;
+export default BaseButtonCounter;
