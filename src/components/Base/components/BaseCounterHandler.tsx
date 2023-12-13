@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCounter } from '../hooks';
+import { useCounter } from './hooks';
 import BaseCounter from './BaseCounter';
 import './ExploreContainer.css';
 import { IonItem, IonLabel } from '@ionic/react';
