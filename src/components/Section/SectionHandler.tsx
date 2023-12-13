@@ -7,12 +7,11 @@ import Section from './Section';
 
 type SectionHandlerInput =  {
   sectionCode: SectionCode
-  children?: ReactElement;
 }
 
 // A section that contain all the information about the counters and the actual counter
 // The children can be another section. Usefull if we ahve counters nidificated
-const SectionHandler: React.FC<SectionHandlerInput> = ({sectionCode, children}) => {
+const SectionHandler: React.FC<SectionHandlerInput> = ({sectionCode}) => {
 
   const [totalCount, setTotalCount] = useState<number>(0);
   const { countCodes, loadingRetriveSection} = useRetiveSection(sectionCode);
@@ -39,9 +38,7 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({sectionCode, children}) 
 
   return (
     <Section onChange={_onChange} 
-    counterInput={[obj]}>
-      {children}
-    </Section>
+    counterInput={[obj]}/>
 
   );
 };
