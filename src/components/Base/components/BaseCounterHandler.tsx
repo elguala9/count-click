@@ -5,6 +5,7 @@ import './ExploreContainer.css';
 import { IonItem, IonLabel } from '@ionic/react';
 import { CounterCode, OnChangeCounter } from '../../../types/CounterType';
 
+// I have created tese partial type becouse in this way they can be used in other components
 export type BaseCounterHandlerInput_CounterParams = {
   counterValue: number;
   counterLabel: string;
@@ -18,6 +19,7 @@ export type BaseCounterHandlerInput_OnChange = {
 
 type BaseCounterHandlerInput = BaseCounterHandlerInput_CounterParams & BaseCounterHandlerInput_OnChange;
 
+// The components that handle the single counter
 const BaseCounterHandler: React.FC<BaseCounterHandlerInput> = ({counterCode, counterLabel, counterValue, onChange}) => {
 
   const {count, onClick} = useCounter(counterCode, counterValue, onChange);

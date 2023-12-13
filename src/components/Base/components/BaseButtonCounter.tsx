@@ -6,6 +6,7 @@ type BaseButtonCounterInput = {
   label?: string;
 }
 
+// base nutton of the application that will be used to update a counter
 const BaseButtonCounter: React.FC<BaseButtonCounterInput> = ({onClick, label}) => {
   return (
     <IonButton onClick={onClick}>
