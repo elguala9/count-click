@@ -3,6 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
+import { Storage } from '@ionic/storage'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -25,6 +26,9 @@ import './theme/variables.css';
 
 setupIonicReact();
 
+const storage = new Storage();
+storage.create();
+
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
@@ -39,3 +43,4 @@ const App: React.FC = () => (
 );
 
 export default App;
+export { storage };
