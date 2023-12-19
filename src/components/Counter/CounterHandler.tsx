@@ -1,8 +1,8 @@
 import React from 'react';
-import { useCounter } from '../../hooks/HooksCounter';
 import Counter from './Counter';
 import { IonItem, IonLabel } from '@ionic/react';
 import { CounterCode, OnChangeCounter } from '../../types/CounterType';
+import { useCounterClick } from '../../hooks/HooksCounter';
 
 // I have created tese partial type becouse in this way they can be used in other components
 export type CounterHandlerInput_CounterParams = {
@@ -21,7 +21,7 @@ type CounterHandlerInput = CounterHandlerInput_CounterParams & CounterHandlerInp
 // The components that handle the single counter
 const CounterHandler: React.FC<CounterHandlerInput> = ({counterCode, counterLabel, counterValue, onChange}) => {
 
-  const {count, onClick} = useCounter(counterCode, counterValue, onChange);
+  const {count, onClick} = useCounterClick(counterCode, counterValue, onChange);
 
   return (
     <Counter onClick={onClick}>

@@ -1,9 +1,8 @@
 import { IonButton, IonCard, IonCardHeader, IonInput } from '@ionic/react';
-import React, { useCallback, useEffect, useState } from 'react';
-import { storage } from '../../App';
-import { SectionRootKey } from '../../const/Const';
+import React, { useCallback, useState } from 'react';
 import { useSection } from '../../hooks/HooksData';
-import { SectionStructure, Sections } from '../../types/DataType';
+import { SectionStructure } from '../../types/DataType';
+import { hashString } from '../../utility/HashUtility';
 
 // A section that contain all the information about the counters and the actual counter
 // The children can be another section. Usefull if we ahve counters nidificated
@@ -26,9 +25,11 @@ const CreateSection: React.FC = () => {
   const onClick = useCallback(async ()=>{
     const sectionStructure: SectionStructure = {
       counters: [],
-      locked: true
+      locked: true, 
+      sectionName: sectionName, 
+      sectionCode: await hashString(sectionName)
     }
-    createSection(sectionName, sectionStructure)
+    createSection(sectionStructure)
   }, [createSection, sectionName])
 
   return (

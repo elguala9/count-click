@@ -1,10 +1,11 @@
 import { IonCard, IonCardHeader, IonGrid } from '@ionic/react';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import CounterHandler, { CounterHandlerInput_CounterParams, CounterHandlerInput_OnChange } from '../Counter/CounterHandler';
-import { OnChangeCounterinput } from '../../types/CounterType';
+import { OnChangeCounter, OnChangeCounterinput } from '../../types/CounterType';
+import CounterHandler, { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
 
-type SectionInput =  CounterHandlerInput_OnChange & {
-  counterInput: CounterHandlerInput_CounterParams[];
+type SectionInput = {
+  counterInput: CounterHandlerInput_CounterParams[],
+  onChange: OnChangeCounter
 }
 
 // A section that contain all the information about the counters and the actual counter
@@ -17,7 +18,7 @@ const Section: React.FC<SectionInput> = ({counterInput, onChange}) => {
   const _onChange = useCallback((input: OnChangeCounterinput)=>{
     onChange(input);
     setCounter(input.newValue);
-  }, [])
+  }, [onChange])
 
   useEffect(()=>{
     const _baseCounterHandlers: ReactElement[] = [];
