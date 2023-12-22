@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
 import { CounterCode, OnChangeCounter } from "../types/CounterType";
 import { useCounterData } from "./HooksData";
+import { CounterHandlerInput_CounterParams } from "../components/Counter/CounterHandler";
+import { CounterStructure } from "../types/DataType";
 
 // hook used to simply the source code. This hook handle the change of the counter in the CounterHandler component.
 export function useCounterClick(counterCode: string, counterValue: number, onChange: OnChangeCounter) {
@@ -24,21 +26,29 @@ export function useCounterFunctions() {
 
     const { retriveCounter } = useCounterData()
 
-    const getValueFromCounter = useCallback(async (counterCode: CounterCode)=>{
+    const getCounter = useCallback(async (counterCode: CounterCode)=>{
         const { counter, found} = await retriveCounter(counterCode);
         if(found === false)
             throw new DOMException("Counter " + counterCode + " not found");
-        return counter.value;
+        return counter;
     }, [retriveCounter]);
 
-    const getTotalFromCounters = useCallback(async (counters: CounterCode[])=>{
+    const getTotalFromCounters = useCallback(async (countersCode: CounterCode[])=>{
         let totalValue = 0;
-        for(let i=0; i<counters.length; i++)
-            totalValue+= await getValueFromCounter(counters[i]);
-        return totalValue;
-    }, [getValueFromCounter]);
+        const counters: CounterStructure[] = [];
+        let counter: CounterStructure;
+        for(let i=0; i<countersCode.length; i++){
+            counter = await getCounter(countersCode[i])
+            counters.push(counter);
+            totalValue += counter.value;
+        }
+            
+        return {counters, totalValue};
+    }, [getCounter]);
+
+    
 
     return useMemo(()=>{
-        return {getValueFromCounter, getTotalFromCounters}
-    }, [getValueFromCounter, getTotalFromCounters]);
+        return {getCounter, getTotalFromCounters}
+    }, [getCounter, getTotalFromCounters]);
 }

@@ -1,23 +1,29 @@
 import { useCallback, useMemo } from "react";
-import { SectionStructure } from "../types/DataType";
+import { CounterStructure, SectionStructure } from "../types/DataType";
 import { useCounterFunctions } from "./HooksCounter";
+import { CountersOfSection } from "../types/SectionType";
 
 // hook utility for section
 export function useSectionFunctions() {
 
     const { getTotalFromCounters } = useCounterFunctions();
 
-    const getTotalCountFromSection = useCallback(async (section?: SectionStructure)=>{
+    const getCompleteSection = useCallback(async (section?: SectionStructure)=>{
         let cursor = section;
         let totalCount = 0;
+        const countersOfSection: CountersOfSection = new CountersOfSection();
+        let cursorCountersOfSection: CountersOfSection | undefined = countersOfSection;
         while(cursor !== undefined){
-            totalCount += await getTotalFromCounters(cursor.counters);
+            const {counters, totalValue} = await getTotalFromCounters(cursor.counters);
+            totalCount += totalValue;
+            cursorCountersOfSection = {countersStructure: counters, countersOfSection: new CountersOfSection()};
+            cursorCountersOfSection = cursorCountersOfSection.countersOfSection;
             cursor = cursor.SectionStructure;
         }
-        return totalCount;
+        return {countersOfSection, totalCount};
     }, [getTotalFromCounters]);
 
     return useMemo(()=>{
-        return { getTotalCountFromSection }
-    }, [getTotalCountFromSection]);
+        return { getCompleteSection }
+    }, [getCompleteSection]);
 }

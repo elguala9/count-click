@@ -1,16 +1,17 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
+import SectionPage from './SectionPage';
 
 interface SectionRouteInput
   extends RouteComponentProps<{
     id: string;
   }> {}
-// The componenet that retrive the section from the data
+// The componenet is used when rounting to the section page
 const SectionRoute: React.FC<SectionRouteInput> = ({match}) => {
 
 
   return (
-    <>{match.params.id}</>
+    <SectionPage sectionCode={match.params.id}/>
   );
 };
 

@@ -31,13 +31,6 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, counterInput, 
 
   /*if(loadingRetriveSection)
     return <IonLoading/>*/
-
-  const obj: CounterHandlerInput_CounterParams = {
-    counterCode: "xxx",
-    counterLabel: "Ciao",
-    counterValue: 10
-  }
-
   return (
     <>
       <Section onChange={_onChange} 
