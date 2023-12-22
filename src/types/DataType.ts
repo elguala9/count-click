@@ -1,4 +1,5 @@
-import { CounterCode, SectionCode } from "./CounterType";
+import { CounterCode } from "./CounterType";
+import { SectionCode } from "./SectionType";
 
 export type SectionStructure = {
     sectionName: string;

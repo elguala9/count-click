@@ -1,10 +1,11 @@
 import { useCallback, useMemo } from "react";
 import { storage } from "../App";
 import { CounterRootKey, SectionRootKey } from "../const/Const";
-import { SectionCode } from "../types/CounterType";
-import { CounterStructure, Counters, SectionStructure, Sections } from "../types/DataType";
 
-export function useSection() {
+import { CounterStructure, Counters, SectionStructure, Sections } from "../types/DataType";
+import { SectionCode } from "../types/SectionType";
+
+export function useSectionData() {
 
     const retriveSectionsMap = useCallback(async ()=>{
         let sections: Sections = await storage.get(SectionRootKey);
@@ -58,7 +59,7 @@ export function useSection() {
 
 }
 
-export function useCounter(){
+export function useCounterData(){
     
     const retriveCountersMap = useCallback(async ()=>{
         let counters: Counters = await storage.get(CounterRootKey);

@@ -1,12 +1,11 @@
-import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
-import SectionHandler from '../components/Section/SectionHandler';
+import React from 'react';
 import CreateSection from '../components/Section/CreateSection';
 import SectionList from '../components/Section/SectionList';
 
 const Home: React.FC = () => {
+
+
   return (
     <IonPage>
       <IonHeader>

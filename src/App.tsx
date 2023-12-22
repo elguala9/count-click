@@ -23,6 +23,8 @@ import '@ionic/react/css/text-transformation.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import SectionPage from './components/Section/SectionPage';
+import SectionRoute from './components/Section/SectionRoute';
 
 setupIonicReact();
 
@@ -34,6 +36,8 @@ const App: React.FC = () => (
     <IonReactRouter>
         <Route exact path="/home">
           <Home />
+        </Route>
+        <Route exact path="/SectionPage/:id" component={SectionRoute}>
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />

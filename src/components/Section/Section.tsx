@@ -9,7 +9,6 @@ type SectionInput = {
 }
 
 // A section that contain all the information about the counters and the actual counter
-// The children can be another section. Usefull if we ahve counters nidificated
 const Section: React.FC<SectionInput> = ({counterInput, onChange}) => {
 
   const [baseCounterHandlers, setCounterHandler] = useState<ReactElement<typeof CounterHandler[]>>();

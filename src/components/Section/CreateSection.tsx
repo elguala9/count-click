@@ -1,16 +1,15 @@
 import { IonButton, IonCard, IonCardHeader, IonInput } from '@ionic/react';
 import React, { useCallback, useState } from 'react';
-import { useSection } from '../../hooks/HooksData';
+import { useSectionData } from '../../hooks/HooksData';
 import { SectionStructure } from '../../types/DataType';
 import { hashString } from '../../utility/HashUtility';
 
-// A section that contain all the information about the counters and the actual counter
-// The children can be another section. Usefull if we ahve counters nidificated
+// Component in which we can create a new section
 const CreateSection: React.FC = () => {
 
   const [sectionName, setSectionName] = useState<string>("");
   const [formError, setFormError] = useState<boolean>(true);
-  const {createSection, retriveSection} = useSection();
+  const {createSection, retriveSection} = useSectionData();
 
   const onInput = useCallback(async (event: any)=>{
     setFormError(false);

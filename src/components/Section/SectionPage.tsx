@@ -1,21 +1,19 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { OnChangeCounter, OnChangeCounterinput, SectionCode } from '../../types/CounterType';
-import { CounterHandlerInput_CounterParams, CounterHandlerInput_OnChange } from '../Counter/CounterHandler';
-import Section from './Section';
-import { useSection } from '../../hooks/HooksData';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useSectionData } from '../../hooks/HooksData';
+import { SectionCode } from '../../types/SectionType';
 import { SectionStructure } from '../../types/DataType';
+import { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
 import SectionHandler, { SectionHandlerInput } from './SectionHandler';
 
 type SectionPageInput =  {
   sectionCode: SectionCode
 }
 
-// A section that contain all the information about the counters and the actual counter
-// The children can be another section. Usefull if we have counters nidificated
+// The componenet that retrive the section from the data
 const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
 
   const [ sectionHandlersInput, setSectionHandlersInput ] = useState<ReactElement>();
-  const  { retriveSection } = useSection();
+  const  { retriveSection } = useSectionData();
 
 
 
@@ -32,7 +30,7 @@ const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
     })
     
 
-  }, [])
+  }, [retriveSection, sectionCode])
 
   const obj: CounterHandlerInput_CounterParams = {
     counterCode: "xxx",

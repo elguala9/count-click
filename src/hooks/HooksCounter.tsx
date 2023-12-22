@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { CounterCode, OnChangeCounter } from "../types/CounterType";
-import { useCounter } from "./HooksData";
+import { useCounterData } from "./HooksData";
 
 // hook used to simply the source code. This hook handle the change of the counter in the CounterHandler component.
 export function useCounterClick(counterCode: string, counterValue: number, onChange: OnChangeCounter) {
@@ -22,7 +22,7 @@ export function useCounterClick(counterCode: string, counterValue: number, onCha
 // utility function for the counters
 export function useCounterFunctions() {
 
-    const { retriveCounter } = useCounter()
+    const { retriveCounter } = useCounterData()
 
     const getValueFromCounter = useCallback(async (counterCode: CounterCode)=>{
         const { counter, found} = await retriveCounter(counterCode);

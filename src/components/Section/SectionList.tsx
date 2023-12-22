@@ -1,20 +1,26 @@
 import { IonGrid, IonLoading, IonRow } from '@ionic/react';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { useSection } from '../../hooks/HooksData';
-import { OnChangeCounterinput, SectionCode } from '../../types/CounterType';
-import { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
-import Section from './Section';
-import { SectionStructure, Sections } from '../../types/DataType';
+import { useSectionData } from '../../hooks/HooksData';
+import { SectionStructure } from '../../types/DataType';
+import SectionBox from './SectionBox';
+import { OnSelectSection } from '../../types/SectionType';
+import { useHistory } from 'react-router';
 
+export type SectionListInput = {
+  onSelect?: OnSelectSection;
+}
 
-
-// A section that contain all the information about the counters and the actual counter
-// The children can be another section. Usefull if we ahve counters nidificated
-const SectionList: React.FC = () => {
+// A list of all the sections
+const SectionList: React.FC<SectionListInput> = () => {
 
   const [loadingRetriveSections, setLoadingRetriveSections] = useState<boolean>(true);
   const [ listSections, setListSection ] = useState<ReactElement[]>([])
-  const { retriveSectionsArray } = useSection();
+  const { retriveSectionsArray } = useSectionData();
+  const history = useHistory();
+
+  const _onSelect: OnSelectSection = useCallback((x: SectionStructure)=>{
+    history.push("SectionPage/" + x.sectionCode)
+  }, [history]);
 
   useEffect(()=>{
     setLoadingRetriveSections(true);
@@ -23,16 +29,15 @@ const SectionList: React.FC = () => {
       for(let i=0; i<sections.length; i++)
         _listSections.push(
             <IonRow>
-              1111  
+              <SectionBox sectionStructure={sections[i]} onClick={_onSelect}/>  
             </IonRow>
           )
       setListSection(_listSections);
     }).finally(()=>setLoadingRetriveSections(false))
-  }, [retriveSectionsArray])
+  }, [_onSelect, retriveSectionsArray])
 
   if(loadingRetriveSections)
     return <IonLoading/>
-
 
   return (
     <IonGrid>

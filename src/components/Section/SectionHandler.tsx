@@ -1,6 +1,6 @@
-import React, { Children, ReactElement, useCallback, useEffect, useState } from 'react';
-import { OnChangeCounter, OnChangeCounterinput, SectionCode } from '../../types/CounterType';
-import { CounterHandlerInput_CounterParams, CounterHandlerInput_OnChange } from '../Counter/CounterHandler';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { OnChangeCounter, OnChangeCounterinput } from '../../types/CounterType';
+import { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
 import Section from './Section';
 
 export type SectionHandlerInput =  {
@@ -9,8 +9,7 @@ export type SectionHandlerInput =  {
   sectionHandlerInput?: SectionHandlerInput;
 }
 
-// A section that contain all the information about the counters and the actual counter
-// The children can be another section. Usefull if we ahve counters nidificated
+// An handler of the section. It handle the total counnter and the evetnual subsection
 const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, counterInput, sectionHandlerInput}) => {
 
   const [totalCount, setTotalCount] = useState<number>(0);
