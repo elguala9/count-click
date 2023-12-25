@@ -6,6 +6,7 @@ import { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
 import SectionHandler, { SectionHandlerInput } from './SectionHandler';
 import { useCounterFunctions } from '../../hooks/HooksCounter';
 import { useSectionFunctions } from '../../hooks/HooksSection';
+import CreateCounterModalButton from '../Counter/CreateCounterModalButton';
 
 type SectionPageInput =  {
   sectionCode: SectionCode
@@ -20,8 +21,8 @@ const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
   const { getCompleteSection } = useSectionFunctions();
 
   useEffect(()=>{
-    
-    retriveSection(sectionCode).then(({found, section})=>{
+    console.log("loop");
+    /*retriveSection(sectionCode).then(({found, section})=>{
       if(found){
         getCompleteSection(section).then((res)=>console.log("section" + res));
         const _sectionHandlerInput: SectionHandlerInput = {} as SectionHandlerInput;
@@ -33,14 +34,17 @@ const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
         }
         setSectionHandlersInput(_sectionHandlerInput);
       }
-    })
+    })*/
     
 
-  }, [retriveSection, sectionCode])
+  }, [getCompleteSection, retriveSection, sectionCode])
 
   return (
-    <></>
-    //<SectionHandler sectionHandlerInput={sectionHandlersInput}/>
+    <>
+      <SectionHandler sectionHandlerInput={sectionHandlersInput}/>
+      <CreateCounterModalButton sectionCode={sectionCode}/>
+    </>
+    
   );
 };
 

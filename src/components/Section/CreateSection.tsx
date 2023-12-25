@@ -24,9 +24,9 @@ const CreateSection: React.FC = () => {
   const onClick = useCallback(async ()=>{
     const sectionStructure: SectionStructure = {
       counters: [],
-      locked: true, 
-      sectionName: sectionName, 
-      sectionCode: await hashString(sectionName)
+      locked: true,
+      sectionName: sectionName,
+      sectionCode: await hashString(sectionName),
     }
     createSection(sectionStructure)
   }, [createSection, sectionName])

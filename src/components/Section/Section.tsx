@@ -20,15 +20,16 @@ const Section: React.FC<SectionInput> = ({counterInput, onChange}) => {
   }, [onChange])
 
   useEffect(()=>{
+    console.log("loop 2");
     const _baseCounterHandlers: ReactElement[] = [];
     for(let i=0; i < counterInput.length; i++)
       _baseCounterHandlers.push(
         <CounterHandler 
-          counterCode={counterInput[i].counterCode} 
-          counterLabel={counterInput[i].counterLabel} 
-          counterValue={counterInput[i].counterValue} 
+          counterCode={counterInput[i].counterCode}
+          /*counterLabel={counterInput[i].counterLabel}
+          counterValue={counterInput[i].counterValue} */
           onChange={_onChange}
-          key={i}/>
+          key={i} counterName={''} value={0} locked={false}/>
         );
       
     setCounterHandler(

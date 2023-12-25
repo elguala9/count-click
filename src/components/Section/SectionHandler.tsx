@@ -23,6 +23,7 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, counterInput, 
   }, [onChange])
 
   useEffect(()=>{
+    console.log("loop 1");
     if(sectionHandlerInput !== undefined)
       setSubSection(
         <SectionHandler onChange={_onChange} counterInput={sectionHandlerInput.counterInput} sectionHandlerInput={sectionHandlerInput.sectionHandlerInput}/>

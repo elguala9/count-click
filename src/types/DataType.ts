@@ -7,7 +7,7 @@ export type SectionStructure = {
     counters: CounterCode[];
     locked: boolean;
     //sectionStructure? : SectionStructure;
-    subSectionCode: SectionCode;
+    subSectionCode?: SectionCode;
 }
 
 export type Sections = Map<string, SectionStructure>;

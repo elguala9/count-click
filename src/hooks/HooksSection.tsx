@@ -9,7 +9,7 @@ export function useSectionFunctions() {
     const { getTotalFromCounters } = useCounterFunctions();
 
     const getCompleteSection = useCallback(async (section?: SectionStructure)=>{
-        let cursor = section;
+        const cursor = section;
         let totalCount = 0;
         const countersOfSection: CountersOfSection = new CountersOfSection();
         let cursorCountersOfSection: CountersOfSection | undefined = countersOfSection;
@@ -18,7 +18,7 @@ export function useSectionFunctions() {
             totalCount += totalValue;
             cursorCountersOfSection = {countersStructure: counters, countersOfSection: new CountersOfSection()};
             cursorCountersOfSection = cursorCountersOfSection.countersOfSection;
-            cursor = cursor.SectionStructure;
+            //cursor = 
         }
         return {countersOfSection, totalCount};
     }, [getTotalFromCounters]);
