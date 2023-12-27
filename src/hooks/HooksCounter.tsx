@@ -27,7 +27,7 @@ export function useCounterFunctions() {
 
     const { retriveCounter, setCounter } = useCounterData()
     const { retriveSection, setSection } = useSectionData()
-    const { getSection } = useSectionFunctions();
+    
 
     const createCounter = useCallback(async (sectionCode: SectionCode, counterStructure: CounterStructure)=>{
         const {found: foundCounter} = await retriveCounter(counterStructure.counterCode);
@@ -50,6 +50,24 @@ export function useCounterFunctions() {
         return counter;
     }, [retriveCounter]);
 
+    
+    
+    const getCounterList = useCallback(async (counterCodeList: CounterCode[])=>{
+        const _counterList: CounterStructure[] = [];
+        for(let i=0; i<counterCodeList.length; i++)
+            _counterList.push(await getCounter(counterCodeList[i]))
+        return _counterList;
+    }, [getCounter]);
+
+    return useMemo(()=>{
+        return {getCounter, getCounterList, createCounter}
+    }, [getCounter, getCounterList, createCounter]);
+}
+
+export function useCounterTotal() {
+    const { getSection } = useSectionFunctions();
+    const { getCounter } = useCounterFunctions();
+
     const getTotalAndListFromCounterList = useCallback(async (counterCodeList: CounterCode[])=>{
         let totalValue = 0;
         const counters: CounterStructure[] = [];
@@ -68,15 +86,9 @@ export function useCounterFunctions() {
         console.log("counterCodeList", counterCodeList);
         return getTotalAndListFromCounterList(counterCodeList);
     }, [getSection, getTotalAndListFromCounterList]);
-    
-    const getCounterList = useCallback(async (counterCodeList: CounterCode[])=>{
-        const _counterList: CounterStructure[] = [];
-        for(let i=0; i<counterCodeList.length; i++)
-            _counterList.push(await getCounter(counterCodeList[i]))
-        return _counterList;
-    }, [getCounter]);
 
     return useMemo(()=>{
-        return {getCounter, getTotalAndListFromCounterList, getCounterList, getTotalAndCounterListFromSectionCode, createCounter}
-    }, [getCounter, getTotalAndListFromCounterList, getCounterList, getTotalAndCounterListFromSectionCode, createCounter]);
+        return {getTotalAndListFromCounterList, getTotalAndCounterListFromSectionCode}
+    }, [getTotalAndListFromCounterList, getTotalAndCounterListFromSectionCode]);
+
 }

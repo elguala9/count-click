@@ -21,13 +21,13 @@ const Counter: React.FC<CounterInput> = ({children, onClick}) => {
   return (
     <IonRow>
       <IonCol>
-        <ButtonCounter onClick={onClickMinus}/>
+        <ButtonCounter onClick={onClickMinus} label='-'/>
       </IonCol>
       <IonCol>
         {children}
       </IonCol>
       <IonCol>
-        <ButtonCounter onClick={onClickPlus}/>
+        <ButtonCounter onClick={onClickPlus} label='+'/>
       </IonCol>
     </IonRow>
   );

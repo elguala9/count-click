@@ -1,12 +1,8 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSectionData } from '../../hooks/HooksData';
-import { SectionCode } from '../../types/SectionType';
 import { SectionStructure } from '../../types/DataType';
-import { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
+import { SectionCode } from '../../types/SectionType';
 import SectionHandler, { SectionHandlerInput } from './SectionHandler';
-import { useCounterFunctions } from '../../hooks/HooksCounter';
-import { useSectionFunctions } from '../../hooks/HooksSection';
-import CreateCounterModalButton from '../Counter/CreateCounterModalButton';
 
 type SectionPageInput =  {
   sectionCode: SectionCode

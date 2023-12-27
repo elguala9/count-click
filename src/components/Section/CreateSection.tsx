@@ -29,6 +29,7 @@ const CreateSection: React.FC = () => {
       locked: true,
       sectionName: sectionName,
       sectionCode: await hashString(sectionName),
+      subSectionCodeList: []
     }
     createSection(sectionStructure)
   }, [createSection, sectionName])

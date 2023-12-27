@@ -5,7 +5,7 @@ import { CounterStructure } from '../../types/DataType';
 import CounterHandler from './CounterHandler';
 import CreateCounterModalButton from './CreateCounterModalButton';
 import { SectionCode } from '../../types/SectionType';
-import { useCounterFunctions } from '../../hooks/HooksCounter';
+import { useCounterFunctions, useCounterTotal } from '../../hooks/HooksCounter';
 
 export type CounterListInput = {
   sectionCode: SectionCode;
@@ -16,7 +16,7 @@ export type CounterListInput = {
 const CounterList: React.FC<CounterListInput> = ({sectionCode, onChange}) => {
 
   const [list, setList] = useState<ReactElement[]>([]);
-  const { getTotalAndCounterListFromSectionCode } = useCounterFunctions();
+  const { getTotalAndCounterListFromSectionCode } = useCounterTotal();
 
   useEffect(()=>{
     getTotalAndCounterListFromSectionCode(sectionCode).then(({counters})=>{
