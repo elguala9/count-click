@@ -3,13 +3,15 @@ import React, { useCallback, useState } from 'react';
 import { useSectionData } from '../../hooks/HooksData';
 import { SectionStructure } from '../../types/DataType';
 import { hashString } from '../../utility/HashUtility';
+import { useSectionFunctions } from '../../hooks/HooksSection';
 
 // Component in which we can create a new section
 const CreateSection: React.FC = () => {
 
   const [sectionName, setSectionName] = useState<string>("");
   const [formError, setFormError] = useState<boolean>(true);
-  const {createSection, retriveSection} = useSectionData();
+  const { retriveSection} = useSectionData();
+  const { createSection } = useSectionFunctions();
 
   const onInput = useCallback(async (event: any)=>{
     setFormError(false);

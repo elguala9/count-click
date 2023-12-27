@@ -15,34 +15,33 @@ type SectionPageInput =  {
 // The componenet that retrive the section from the data
 const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
 
-  const [ sectionHandlersInput, setSectionHandlersInput ] = useState<SectionHandlerInput>();
+  const [ sectionHandlersInput, setSectionHandlersInput ] = useState<SectionHandlerInput>({ sectionCode } as SectionHandlerInput);
   const  { retriveSection } = useSectionData();
-  const { getTotalFromCounters} = useCounterFunctions();
-  const { getCompleteSection } = useSectionFunctions();
 
   useEffect(()=>{
     console.log("loop");
-    /*retriveSection(sectionCode).then(({found, section})=>{
+    retriveSection(sectionCode).then(({found, section})=>{
       if(found){
-        getCompleteSection(section).then((res)=>console.log("section" + res));
-        const _sectionHandlerInput: SectionHandlerInput = {} as SectionHandlerInput;
+        // TO FIX: this function (getCompleteSection) goes in loop
+        //getCompleteSection(section).then((res)=>console.log("section" + res));
+        const _sectionHandlerInput: SectionHandlerInput = { sectionCode } as SectionHandlerInput;
         const _section: SectionStructure = section;
-        while(_section != undefined){
+        /*while(_section != undefined){
           _sectionHandlerInput.onChange = undefined;
           _sectionHandlerInput.sectionHandlerInput
           //{_sectionHandlerInput.counterInput, }  = _section.counters;
-        }
+        }*/
         setSectionHandlersInput(_sectionHandlerInput);
       }
-    })*/
+    })
     
 
-  }, [getCompleteSection, retriveSection, sectionCode])
+  }, [retriveSection, sectionCode])
 
   return (
     <>
-      <SectionHandler sectionHandlerInput={sectionHandlersInput}/>
-      <CreateCounterModalButton sectionCode={sectionCode}/>
+      <SectionHandler {...sectionHandlersInput}/>
+      
     </>
     
   );

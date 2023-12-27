@@ -2,15 +2,16 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { OnChangeCounter, OnChangeCounterinput } from '../../types/CounterType';
 import { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
 import Section from './Section';
+import { SectionCode } from '../../types/SectionType';
 
 export type SectionHandlerInput =  {
   onChange?: OnChangeCounter;
-  counterInput?: CounterHandlerInput_CounterParams[],
+  sectionCode: string;
   sectionHandlerInput?: SectionHandlerInput;
 }
 
 // An handler of the section. It handle the total counnter and the evetnual subsection
-const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, counterInput, sectionHandlerInput}) => {
+const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode,  sectionHandlerInput}) => {
 
   const [totalCount, setTotalCount] = useState<number>(0);
   const [ subSection, setSubSection ] = useState<ReactElement>();
@@ -26,7 +27,7 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, counterInput, 
     console.log("loop 1");
     if(sectionHandlerInput !== undefined)
       setSubSection(
-        <SectionHandler onChange={_onChange} counterInput={sectionHandlerInput.counterInput} sectionHandlerInput={sectionHandlerInput.sectionHandlerInput}/>
+        <SectionHandler {...sectionHandlerInput}/>
         );
   }, [_onChange, sectionHandlerInput])
 
@@ -35,7 +36,7 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, counterInput, 
   return (
     <>
       <Section onChange={_onChange} 
-      counterInput={counterInput ?? []}/>
+      sectionCode={sectionCode}/>
       {subSection}
     </>
   );

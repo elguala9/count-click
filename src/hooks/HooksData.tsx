@@ -2,13 +2,13 @@ import { useCallback, useMemo } from "react";
 import { storage } from "../App";
 import { CounterRootKey, SectionRootKey } from "../const/Const";
 
-import { CounterStructure, Counters, SectionStructure, Sections } from "../types/DataType";
+import { CounterStructure, CounterMap, SectionStructure, SectionMap } from "../types/DataType";
 import { SectionCode } from "../types/SectionType";
 
 export function useSectionData() {
 
     const retriveSectionsMap = useCallback(async ()=>{
-        let sections: Sections = await storage.get(SectionRootKey);
+        let sections: SectionMap = await storage.get(SectionRootKey);
         if(sections === null){
             sections = new Map<string, SectionStructure>();
             storage.set(SectionRootKey, sections);
@@ -19,7 +19,7 @@ export function useSectionData() {
 
     /*
     const retriveSectionsIterableKeys = useCallback(async ()=>{
-        const sections: Sections = await retriveSectionsMap();
+        const sections: SectionMap = await retriveSectionsMap();
         return sections.keys();
     }, [retriveSectionsMap]);
 
@@ -29,7 +29,7 @@ export function useSectionData() {
     }, [retriveSectionsIterableKeys]);*/
 
     const retriveSectionsIterable = useCallback(async ()=>{
-        const sections: Sections = await retriveSectionsMap();
+        const sections: SectionMap = await retriveSectionsMap();
         return sections.values();
     }, [retriveSectionsMap]);
 
@@ -39,40 +39,37 @@ export function useSectionData() {
     }, [retriveSectionsIterable]);
 
     const retriveSection = useCallback(async (sectionCode: SectionCode)=>{
-        const sections: Sections = await retriveSectionsMap();
+        const sections: SectionMap = await retriveSectionsMap();
         const section = sections.get(sectionCode);
         return {section: section ?? {} as SectionStructure, found: section === undefined ? false : true};
     }, [retriveSectionsMap]);
 
-    const createSection = useCallback(async (sectionStructure: SectionStructure)=>{
-        const {found} = await retriveSection(sectionStructure.sectionCode)
-        if(found)
-            throw new DOMException("Section already exist")
-        const sections: Sections = await retriveSectionsMap();
+    const setSection = useCallback(async (sectionStructure: SectionStructure)=>{
+        const sections: SectionMap = await retriveSectionsMap();
         sections.set(sectionStructure.sectionCode, sectionStructure);
         storage.set(SectionRootKey, sections);
-    }, [retriveSection, retriveSectionsMap]);
+    }, [retriveSectionsMap]);
 
     return useMemo(()=>{
-        return {retriveSection, createSection, retriveSectionsMap, retriveSectionsArray};
-    }, [retriveSection, createSection, retriveSectionsMap, retriveSectionsArray])
+        return {retriveSection, setSection, retriveSectionsMap, retriveSectionsArray};
+    }, [retriveSection, setSection, retriveSectionsMap, retriveSectionsArray])
 
 }
 
 export function useCounterData(){
     
     const retriveCountersMap = useCallback(async ()=>{
-        let counters: Counters = await storage.get(CounterRootKey);
+        let counters: CounterMap = await storage.get(CounterRootKey);
         if(counters === null){
             counters = new Map<string, CounterStructure>();
-            storage.set(SectionRootKey, counters);
+            storage.set(CounterRootKey, counters);
             return counters;
         }
         return counters
     }, []);
 
     const retriveCountersIterableKeys = useCallback(async ()=>{
-        const counters: Counters = await retriveCountersMap();
+        const counters: CounterMap = await retriveCountersMap();
         return counters.keys();
     }, [retriveCountersMap]);
 
@@ -82,28 +79,21 @@ export function useCounterData(){
     }, [retriveCountersIterableKeys]);
 
     const retriveCounter = useCallback(async (counterCode: SectionCode)=>{
-        const counters: Counters = await retriveCountersMap();
+        const counters: CounterMap = await retriveCountersMap();
         const counter = counters.get(counterCode);
         return {counter: counter ?? {} as CounterStructure, found: counter === undefined ? false : true};
     }, [retriveCountersMap]);
 
-    const createCounter = useCallback(async (sectionCode: SectionCode, counterStructure: CounterStructure)=>{
-        const {found} = await retriveCounter(sectionCode)
-        if(found)
-            throw new DOMException("Section already exist")
-        const counters: Counters = await retriveCountersMap();
-        counters.set(sectionCode, counterStructure);
-        storage.set(SectionRootKey, counters);
-    }, [retriveCounter, retriveCountersMap]);
-
-    const setCounter = useCallback((counterStructure: CounterStructure)=>{
-        return;
-    }, []);
+    const setCounter = useCallback(async (counterStructure: CounterStructure)=>{
+        const counterMap: CounterMap = await retriveCountersMap();
+        counterMap.set(counterStructure.counterCode, counterStructure);
+        storage.set(CounterRootKey, counterMap);
+    }, [retriveCountersMap]);
 
 
     return useMemo(()=>{
-        return {retriveCountersMap, retriveCountersIterableKeys, retriveArrayKeys, retriveCounter, createCounter};
-    }, [retriveArrayKeys, retriveCounter, retriveCountersIterableKeys, retriveCountersMap, createCounter])
+        return {retriveCountersMap, retriveCountersIterableKeys, retriveArrayKeys, retriveCounter, setCounter};
+    }, [retriveArrayKeys, retriveCounter, retriveCountersIterableKeys, retriveCountersMap, setCounter])
 }
 
 

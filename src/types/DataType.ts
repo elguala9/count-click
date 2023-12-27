@@ -10,7 +10,7 @@ export type SectionStructure = {
     subSectionCode?: SectionCode;
 }
 
-export type Sections = Map<string, SectionStructure>;
+export type SectionMap = Map<string, SectionStructure>;
 
 export type CounterStructure = {
     counterName: string;
@@ -21,4 +21,4 @@ export type CounterStructure = {
     connectedCounter?: CounterCode;
 }
 
-export type Counters = Map<string, CounterStructure>;
+export type CounterMap = Map<string, CounterStructure>;

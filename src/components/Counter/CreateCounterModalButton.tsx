@@ -13,7 +13,6 @@ const CreateCounterModalButton: React.FC<CreateCounterModalButtonInput> = ({ sec
   const [ isOpen, setIsOpen ] = useState(false);
 
   const onClick = useCallback(()=>{
-    console.log("OPEN");
     setIsOpen(true);
   }, []);
 
