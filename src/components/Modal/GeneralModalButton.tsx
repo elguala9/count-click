@@ -1,6 +1,5 @@
-import React, { ReactElement, useCallback, useState } from 'react';
-import { SectionCode } from '../../types/SectionType';
 import { IonButton } from '@ionic/react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import GeneralModal from './GeneralModal';
 
 export type CreateCounterModalButtonInput = {

@@ -1,11 +1,5 @@
-import { InputChangeEventDetail, IonButton, IonContent, IonGrid, IonHeader, IonInput, IonModal, IonRow } from '@ionic/react';
-import { IonInputCustomEvent } from '@ionic/core';
-import React, { ReactElement, useCallback, useState } from 'react';
-import { SectionCode } from '../../types/SectionType';
-import { useCounterData } from '../../hooks/HooksData';
-import { CounterStructure } from '../../types/DataType';
-import { hashString } from '../../utility/HashUtility';
-import { useCounterFunctions } from '../../hooks/HooksCounter';
+import { IonButton, IonHeader, IonModal } from '@ionic/react';
+import React, { ReactElement } from 'react';
 
 export type GeneralModalInput = {
   modalTitle: string;

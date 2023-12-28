@@ -1,10 +1,8 @@
-import { IonCard, IonCardHeader, IonGrid } from '@ionic/react';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { OnChangeCounter, OnChangeCounterinput } from '../../types/CounterType';
-import CounterHandler, { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
-import CounterListModal from '../Counter/CounterListModal';
+import { IonCard, IonCardHeader } from '@ionic/react';
+import React, { useState } from 'react';
+import { OnChangeCounter } from '../../types/CounterType';
 import { SectionCode } from '../../types/SectionType';
-import { useSectionTotal } from '../../hooks/HooksSection';
+import CounterListModal from '../Counter/CounterListModal';
 
 type SectionInput = {
   sectionCode: SectionCode,

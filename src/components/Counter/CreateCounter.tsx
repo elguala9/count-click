@@ -1,11 +1,10 @@
-import { InputChangeEventDetail, IonButton, IonContent, IonGrid, IonHeader, IonInput, IonModal, IonRow } from '@ionic/react';
 import { IonInputCustomEvent } from '@ionic/core';
+import { InputChangeEventDetail, IonButton, IonContent, IonGrid, IonInput, IonRow } from '@ionic/react';
 import React, { useCallback, useState } from 'react';
-import { SectionCode } from '../../types/SectionType';
-import { useCounterData } from '../../hooks/HooksData';
-import { CounterStructure } from '../../types/DataType';
-import { hashString } from '../../utility/HashUtility';
 import { useCounterFunctions } from '../../hooks/HooksCounter';
+import { CounterStructure } from '../../types/DataType';
+import { SectionCode } from '../../types/SectionType';
+import { hashString } from '../../utility/HashUtility';
 
 export type CreateCounterModalInput = {
   sectionCode: SectionCode;

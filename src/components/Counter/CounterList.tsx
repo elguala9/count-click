@@ -1,10 +1,9 @@
-import { IonGrid, IonRow } from '@ionic/react';
+import { IonGrid } from '@ionic/react';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { useCounterTotal } from '../../hooks/HooksCounter';
 import { OnChangeCounter } from '../../types/CounterType';
-import { CounterStructure } from '../../types/DataType';
-import CounterHandler from './CounterHandler';
 import { SectionCode } from '../../types/SectionType';
-import { useCounterFunctions, useCounterTotal } from '../../hooks/HooksCounter';
+import CounterHandler from './CounterHandler';
 
 export type CounterListInput = {
   sectionCode: SectionCode;

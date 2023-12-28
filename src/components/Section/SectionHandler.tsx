@@ -1,11 +1,9 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { OnChangeCounter, OnChangeCounterinput } from '../../types/CounterType';
-import { CounterHandlerInput_CounterParams } from '../Counter/CounterHandler';
-import Section from './Section';
-import { SectionCode } from '../../types/SectionType';
-import { useSectionFunctions, useSectionTotal } from '../../hooks/HooksSection';
 import { IonGrid, IonRow } from '@ionic/react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { useSectionFunctions, useSectionTotal } from '../../hooks/HooksSection';
+import { OnChangeCounter, OnChangeCounterinput } from '../../types/CounterType';
 import { SectionStructure } from '../../types/DataType';
+import Section from './Section';
 
 export type SectionHandlerInput =  {
   onChange?: OnChangeCounter;
