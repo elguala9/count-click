@@ -5,6 +5,7 @@ import Section from './Section';
 import { SectionCode } from '../../types/SectionType';
 import { useSectionFunctions, useSectionTotal } from '../../hooks/HooksSection';
 import { IonGrid, IonRow } from '@ionic/react';
+import { SectionStructure } from '../../types/DataType';
 
 export type SectionHandlerInput =  {
   onChange?: OnChangeCounter;
@@ -15,16 +16,17 @@ export type SectionHandlerInput =  {
 const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) => {
 
   const [sectionTotal, setSectionTotal] = useState<number>(0);
-  const [ subSectionList, setSubSectionList ] = useState<ReactElement[]>();
+  const [ sectionStructure, setSectionStructure ] = useState<SectionStructure>();
   const { getSection } = useSectionFunctions()
 
   const { getTotalValueOfSection } = useSectionTotal()
 
   const _onChange = useCallback((input: OnChangeCounterinput)=>{
-    setSectionTotal((sectionTotal)=>sectionTotal+input.change)
+    console.log("sectionTotal", sectionTotal, input.change);
+    setSectionTotal(()=>sectionTotal+input.change)
     if(onChange !== undefined)
       onChange(input);
-  }, [onChange])
+  }, [onChange, sectionTotal])
 
   useEffect(()=>{
     getSection(sectionCode).then((sectionStructure)=>{
@@ -32,17 +34,25 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
         setSectionTotal(total);
       })
 
-      const _list: ReactElement[] = [];
-      for(let i=0; i<sectionStructure.subSectionCodeList.length; i++){
-        _list.push(
-          <IonRow>
-            <SectionHandler onChange={_onChange} sectionCode={sectionStructure.subSectionCodeList[i]}/>
-          </IonRow>
-        )
-      }
-      setSubSectionList(_list);
+      setSectionStructure(sectionStructure);
     })
-  }, [_onChange, getSection, getTotalValueOfSection, sectionCode]);
+  }, [getSection, getTotalValueOfSection, sectionCode]);
+
+  const sectionHandlerList = useCallback(()=>{
+    const _list: ReactElement[] = [];
+    if(sectionStructure === undefined)
+      return _list;
+    
+    for(let i=0; i<sectionStructure.subSectionCodeList.length; i++){
+      _list.push(
+        <IonRow>
+          <SectionHandler onChange={_onChange} sectionCode={sectionStructure.subSectionCodeList[i]}/>
+        </IonRow>
+      )
+    }
+    return _list;
+
+  }, [_onChange, sectionStructure]);
 
   /*if(loadingRetriveSection)
     return <IonLoading/>*/
@@ -51,7 +61,7 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
       <Section onChange={_onChange} 
       sectionCode={sectionCode} sectionTotal={sectionTotal}/>
       <IonGrid>
-        {subSectionList}
+        {sectionHandlerList()}
       </IonGrid>
       
     </>

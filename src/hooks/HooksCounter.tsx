@@ -8,14 +8,16 @@ import { useSectionFunctions } from "./HooksSection";
 // hook used to simply the source code. This hook handle the change of the counter in the CounterHandler component.
 export function useCounterClick(counterCode: string, counterValue: number, onChange: OnChangeCounter) {
     const [ count, setCount ] = useState<number>(counterValue)
+    const { updateTotalCounter } = useCounterFunctions();
 
     const onClick = useCallback((value: number)=>{
         setCount(count => {
             const _count = count + value;
+            updateTotalCounter(counterCode, _count);
             onChange({counterCode, newValue: _count, change: value});
             return _count;
         });
-    }, [counterCode, onChange]);
+    }, [counterCode, onChange, updateTotalCounter]);
 
     return useMemo(()=>{
         return {count, onClick};
@@ -31,7 +33,6 @@ export function useCounterFunctions() {
 
     const createCounter = useCallback(async (sectionCode: SectionCode, counterStructure: CounterStructure)=>{
         const {found: foundCounter} = await retriveCounter(counterStructure.counterCode);
-        console.log("sectionCode", sectionCode);
         const {found: foundSection, section} = await retriveSection(sectionCode);
         if(foundCounter)
             throw new DOMException("Counter " + counterStructure.counterCode + " already exist");
@@ -50,7 +51,12 @@ export function useCounterFunctions() {
         return counter;
     }, [retriveCounter]);
 
-    
+    const updateTotalCounter = useCallback(async (counterCode: CounterCode, value: number)=>{
+        const counterStructure = await getCounter(counterCode);
+        counterStructure.value = value;
+        setCounter(counterStructure);
+
+    }, [getCounter, setCounter]);
     
     const getCounterList = useCallback(async (counterCodeList: CounterCode[])=>{
         const _counterList: CounterStructure[] = [];
@@ -60,8 +66,8 @@ export function useCounterFunctions() {
     }, [getCounter]);
 
     return useMemo(()=>{
-        return {getCounter, getCounterList, createCounter}
-    }, [getCounter, getCounterList, createCounter]);
+        return {getCounter, getCounterList, createCounter, updateTotalCounter}
+    }, [getCounter, getCounterList, createCounter, updateTotalCounter]);
 }
 
 export function useCounterTotal() {
@@ -77,7 +83,6 @@ export function useCounterTotal() {
             counters.push(counter);
             totalValue += counter.value;
         }
-            
         return {counters, totalValue};
     }, [getCounter]);
 
@@ -85,7 +90,7 @@ export function useCounterTotal() {
         const counterCodeList: CounterCode[] = (await getSection(sectionCode)).counters;
         console.log("counterCodeList", counterCodeList);
         return getTotalAndListFromCounterList(counterCodeList);
-    }, [getSection, getTotalAndListFromCounterList]);
+    }, [getSection, getTotalAndListFromCounterList]); 
 
     return useMemo(()=>{
         return {getTotalAndListFromCounterList, getTotalAndCounterListFromSectionCode}
