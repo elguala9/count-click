@@ -6,12 +6,13 @@ import CounterListModal from '../Counter/CounterListModal';
 
 type SectionInput = {
   sectionCode: SectionCode,
+  sectionName: string,
   onChange: OnChangeCounter
   sectionTotal: number;
 }
 
 // A section that contain all the information about the counters and the actual counter
-const Section: React.FC<SectionInput> = ({sectionCode, onChange, sectionTotal}) => {
+const Section: React.FC<SectionInput> = ({sectionCode, onChange, sectionTotal, sectionName}) => {
 
   const [isOpen, setIsOpen ] = useState(false);
 
@@ -19,7 +20,7 @@ const Section: React.FC<SectionInput> = ({sectionCode, onChange, sectionTotal}) 
     <>
       <IonCard onClick={()=>setIsOpen(true)}>
         <IonCardHeader>
-          Section Counter: {sectionTotal}
+          {sectionName}: {sectionTotal}
         </IonCardHeader>
       </IonCard>
       <CounterListModal sectionCode={sectionCode} onChange={onChange} isOpen={isOpen} onClose={()=>setIsOpen(false)}/>

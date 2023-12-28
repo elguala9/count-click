@@ -47,7 +47,7 @@ export function useSectionData() {
     const setSection = useCallback(async (sectionStructure: SectionStructure)=>{
         const sections: SectionMap = await retriveSectionsMap();
         sections.set(sectionStructure.sectionCode, sectionStructure);
-        storage.set(SectionRootKey, sections);
+        await storage.set(SectionRootKey, sections);
     }, [retriveSectionsMap]);
 
     return useMemo(()=>{
@@ -87,7 +87,7 @@ export function useCounterData(){
     const setCounter = useCallback(async (counterStructure: CounterStructure)=>{
         const counterMap: CounterMap = await retriveCountersMap();
         counterMap.set(counterStructure.counterCode, counterStructure);
-        storage.set(CounterRootKey, counterMap);
+        await storage.set(CounterRootKey, counterMap);
     }, [retriveCountersMap]);
 
 

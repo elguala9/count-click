@@ -38,10 +38,10 @@ export function useCounterFunctions() {
             throw new DOMException("Counter " + counterStructure.counterCode + " already exist");
         if(foundSection === false)
             throw new DOMException("Section " + sectionCode + " not found");
-        setCounter(counterStructure);
+        await setCounter(counterStructure);
         // TO DO: I need al limit to the counters in a section
         section.counters.push(counterStructure.counterCode);
-        setSection(section);
+        await setSection(section);
     }, [retriveCounter, retriveSection, setCounter, setSection]);
 
     const getCounter = useCallback(async (counterCode: CounterCode)=>{

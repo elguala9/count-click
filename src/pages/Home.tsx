@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
-import CreateSection from '../components/Section/CreateSection';
+import CreateSectionModal from '../components/Section/CreateSectionModal';
 import SectionList from '../components/Section/SectionList';
 import TempCleanStorage from '../components/temp/tempCleanStorage';
 
@@ -21,7 +21,7 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <SectionList/>
-        <CreateSection/>
+        <CreateSectionModal/>
         <TempCleanStorage/>
       </IonContent>
     </IonPage>

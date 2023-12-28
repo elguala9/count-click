@@ -9,10 +9,11 @@ import GeneralModalButton from '../Modal/GeneralModalButton';
 
 export type CreateCounterModalInput = {
   sectionCode: SectionCode;
+  onSubmit?: ()=>void;
 }
 
 // Component in which we can create a new counter
-const CreateCounterModal: React.FC<CreateCounterModalInput> = ({ sectionCode}) => {
+const CreateCounterModal: React.FC<CreateCounterModalInput> = ({ sectionCode, onSubmit}) => {
 
   const [ counterName, setCounterName ] = useState("");
   const { createCounter } = useCounterFunctions();
@@ -28,8 +29,10 @@ const CreateCounterModal: React.FC<CreateCounterModalInput> = ({ sectionCode}) =
       locked: false,
       value: 0
     } 
-    createCounter(sectionCode, counterStructure)
-  }, [counterName, createCounter, sectionCode])
+    await createCounter(sectionCode, counterStructure);
+    if(onSubmit !== undefined)
+      onSubmit();
+  }, [counterName, createCounter, onSubmit, sectionCode])
 
   return (
     <GeneralModalButton modalTitle={'Create a Counter'} buttonLabel={"Create Counter Modal"} onSubmitModal={onSubmitModal} buttonSubmitLabel={"Create Counter"}>

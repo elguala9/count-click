@@ -4,14 +4,21 @@ import { useSectionData } from '../../hooks/HooksData';
 import { SectionStructure } from '../../types/DataType';
 import { hashString } from '../../utility/HashUtility';
 import { useSectionFunctions } from '../../hooks/HooksSection';
+import { SectionCode } from '../../types/SectionType';
+import GeneralModalButton from '../Modal/GeneralModalButton';
+
+export type CreateSectionModalInput = {
+  fatherSectionCode?: SectionCode;
+  onSubmit?: ()=>void;
+}
 
 // Component in which we can create a new section
-const CreateSection: React.FC = () => {
+const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCode, onSubmit}) => {
 
   const [sectionName, setSectionName] = useState<string>("");
   const [formError, setFormError] = useState<boolean>(true);
   const { retriveSection} = useSectionData();
-  const { createSection } = useSectionFunctions();
+  const { createSection, updateSubSectionList } = useSectionFunctions();
 
   const onInput = useCallback(async (event: any)=>{
     setFormError(false);
@@ -23,7 +30,8 @@ const CreateSection: React.FC = () => {
     setFormError(found);
   }, [retriveSection])
 
-  const onClick = useCallback(async ()=>{
+  const onSubmitModal = useCallback(async ()=>{
+    
     const sectionStructure: SectionStructure = {
       counters: [],
       locked: true,
@@ -31,21 +39,26 @@ const CreateSection: React.FC = () => {
       sectionCode: await hashString(sectionName),
       subSectionCodeList: []
     }
+    // add the section created to the father
+    if(fatherSectionCode !== undefined)
+      await updateSubSectionList(sectionStructure, fatherSectionCode)
+
     createSection(sectionStructure)
-  }, [createSection, sectionName])
+    if(onSubmit !== undefined)
+      onSubmit();
+  }, [createSection, fatherSectionCode, onSubmit, sectionName, updateSubSectionList])
 
   return (
-    <IonCard>
-      <IonCardHeader>
-        Create Section
-      </IonCardHeader>
-      <IonInput onIonInput={onInput}/>
-      <IonButton onClick={onClick} disabled={formError}>
-        Create Section
-      </IonButton>
-    </IonCard>
-
+    <GeneralModalButton modalTitle={'Create a Section'} buttonLabel={"Create Section Modal"} 
+    onSubmitModal={onSubmitModal} buttonSubmitLabel={"Create Section"}>
+      <IonCard>
+        <IonCardHeader>
+          Create Section
+        </IonCardHeader>
+        <IonInput onIonInput={onInput}/>
+      </IonCard>
+    </GeneralModalButton>
   );
 };
 
-export default CreateSection;
+export default CreateSectionModal;

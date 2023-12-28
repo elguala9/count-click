@@ -1,7 +1,6 @@
 import { IonModal } from '@ionic/react';
 import React from 'react';
 import CounterList, { CounterListInput } from './CounterList';
-import CreateCounterModal from './CreateCounterModal';
 
 export type CounterListModalInput = CounterListInput & {
   isOpen: boolean;
@@ -14,7 +13,6 @@ const CounterListModal: React.FC<CounterListModalInput> = ({sectionCode, onChang
   return (
     <IonModal isOpen={isOpen} onWillDismiss={onClose}>
       <CounterList sectionCode={sectionCode} onChange={onChange}/>
-      <CreateCounterModal sectionCode={sectionCode}/>
     </IonModal>
   );
 };

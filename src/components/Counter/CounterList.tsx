@@ -1,9 +1,11 @@
 import { IonGrid } from '@ionic/react';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useCounterTotal } from '../../hooks/HooksCounter';
 import { OnChangeCounter } from '../../types/CounterType';
 import { SectionCode } from '../../types/SectionType';
 import CounterHandler from './CounterHandler';
+import CreateCounterModal from './CreateCounterModal';
+import CreateSectionModal from '../Section/CreateSectionModal';
 
 export type CounterListInput = {
   sectionCode: SectionCode;
@@ -16,7 +18,7 @@ const CounterList: React.FC<CounterListInput> = ({sectionCode, onChange}) => {
   const [list, setList] = useState<ReactElement[]>([]);
   const { getTotalAndCounterListFromSectionCode } = useCounterTotal();
 
-  useEffect(()=>{
+  const updateList = useCallback(()=>{
     getTotalAndCounterListFromSectionCode(sectionCode).then(({counters})=>{
       const _list: ReactElement[] = [];
       for(let i=0; i<counters.length; i++)
@@ -25,14 +27,21 @@ const CounterList: React.FC<CounterListInput> = ({sectionCode, onChange}) => {
         );
       setList(_list);
     })
-    }, [getTotalAndCounterListFromSectionCode, onChange, sectionCode]);
+  }, [getTotalAndCounterListFromSectionCode, onChange, sectionCode])
+
+  useEffect(()=>{
+    updateList();  
+  }, [updateList]);
     
 
   return (
-    <IonGrid>
-      {list}
-    </IonGrid>
-    
+    <>
+      <IonGrid>
+        {list}
+      </IonGrid>
+      <CreateCounterModal sectionCode={sectionCode} onSubmit={updateList}/>
+      <CreateSectionModal fatherSectionCode={sectionCode}/>
+    </>
   );
 };
 

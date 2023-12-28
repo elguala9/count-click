@@ -14,6 +14,7 @@ export type SectionHandlerInput =  {
 const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) => {
 
   const [sectionTotal, setSectionTotal] = useState<number>(0);
+  const [reloadSections, setReloadSections] = useState(false);
   const [ sectionStructure, setSectionStructure ] = useState<SectionStructure>();
   const { getSection } = useSectionFunctions()
 
@@ -52,12 +53,17 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
 
   }, [_onChange, sectionStructure]);
 
-  /*if(loadingRetriveSection)
-    return <IonLoading/>*/
+  useEffect(()=>{
+    if(reloadSections === true)
+      setReloadSections(false);
+  }, [reloadSections, setReloadSections]);
+
   return (
     <>
       <Section onChange={_onChange} 
-      sectionCode={sectionCode} sectionTotal={sectionTotal}/>
+        sectionCode={sectionCode} 
+        sectionTotal={sectionTotal}
+        sectionName={sectionStructure?.sectionName ?? ""}/>
       <IonGrid>
         {sectionHandlerList()}
       </IonGrid>

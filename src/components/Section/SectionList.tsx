@@ -29,7 +29,7 @@ const SectionList: React.FC<SectionListInput> = () => {
       for(let i=0; i<sections.length; i++)
         _listSections.push(
             <IonRow>
-              <SectionBox sectionStructure={sections[i]} onClick={_onSelect}/>  
+              <SectionBox sectionStructure={sections[i]} onClick={_onSelect} key={i}/>  
             </IonRow>
           )
       setListSection(_listSections);

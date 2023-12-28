@@ -16,13 +16,6 @@ export function useSectionFunctions() {
         setSection(sectionStructure);
     }, [retriveSection, setSection]);
 
-    /*const updateTotalSection = useCallback(async (sectionCode: SectionCode, value: number)=>{
-        const section = await getSection(sectionCode);
-        section.
-        setSection(sectionStructure);
-    }, [retriveSection, setSection]);*/
-
-
     const getSection = useCallback(async (sectionCode: SectionCode)=>{
         const { section, found} = await retriveSection(sectionCode);
         if(found === false)
@@ -30,9 +23,15 @@ export function useSectionFunctions() {
         return section;
     }, [retriveSection]);
 
+    const updateSubSectionList = useCallback(async (sectionStructure: SectionStructure, fatherSectionCode: SectionCode)=>{
+        const fatherSectionStructure = await getSection(fatherSectionCode)
+        fatherSectionStructure.subSectionCodeList.push(sectionStructure.sectionCode);
+        setSection(fatherSectionStructure)
+    }, [getSection, setSection]);
+
     return useMemo(()=>{
-        return { getSection, createSection }
-    }, [getSection, createSection]);
+        return { getSection, createSection, updateSubSectionList }
+    }, [getSection, createSection, updateSubSectionList]);
 }
 
 export function useSectionTotal() {
