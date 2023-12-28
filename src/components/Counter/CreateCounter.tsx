@@ -6,15 +6,14 @@ import { useCounterData } from '../../hooks/HooksData';
 import { CounterStructure } from '../../types/DataType';
 import { hashString } from '../../utility/HashUtility';
 import { useCounterFunctions } from '../../hooks/HooksCounter';
-import CreateCounterModalButton from '../Modal/GeneralModalButton';
-import GeneralModalButton from '../Modal/GeneralModalButton';
 
 export type CreateCounterModalInput = {
   sectionCode: SectionCode;
+  onClose: ()=>void;
 }
 
 // Component in which we can create a new counter
-const CreateCounterModal: React.FC<CreateCounterModalInput> = ({ sectionCode}) => {
+const CreateCounterModal: React.FC<CreateCounterModalInput> = ({ sectionCode, onClose}) => {
 
   const [ counterName, setCounterName ] = useState("");
   const { createCounter } = useCounterFunctions();
@@ -23,7 +22,7 @@ const CreateCounterModal: React.FC<CreateCounterModalInput> = ({ sectionCode}) =
     setCounterName(String(event.target.value))
   }, []);
 
-  const onSubmitModal = useCallback(async ()=> {
+  const onClick = useCallback(async ()=> {
     const counterStructure: CounterStructure = {
       counterName,
       counterCode: await hashString(counterName),
@@ -31,18 +30,22 @@ const CreateCounterModal: React.FC<CreateCounterModalInput> = ({ sectionCode}) =
       value: 0
     } 
     createCounter(sectionCode, counterStructure)
-  }, [counterName, createCounter, sectionCode])
+    onClose();
+  }, [counterName, createCounter, onClose, sectionCode])
 
   return (
-    <GeneralModalButton modalTitle={'Create a Counter'} buttonLabel={"Create Counter Modal"} onSubmitModal={onSubmitModal} buttonSubmitLabel={"Create Counter"}>
       <IonContent>
         <IonGrid>
           <IonRow>
             <IonInput label='Name' onIonChange={onChangeCounterName}/>
           </IonRow>
+          <IonRow>
+            <IonButton onClick={onClick}>
+              Create Counter
+            </IonButton>
+          </IonRow>
         </IonGrid>
       </IonContent>
-    </GeneralModalButton>
   );
 };
 

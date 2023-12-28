@@ -3,7 +3,6 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { OnChangeCounter } from '../../types/CounterType';
 import { CounterStructure } from '../../types/DataType';
 import CounterHandler from './CounterHandler';
-import CreateCounterModalButton from './CreateCounterModalButton';
 import { SectionCode } from '../../types/SectionType';
 import { useCounterFunctions, useCounterTotal } from '../../hooks/HooksCounter';
 
