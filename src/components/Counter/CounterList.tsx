@@ -40,7 +40,6 @@ const CounterList: React.FC<CounterListInput> = ({sectionCode, onChange}) => {
         {list}
       </IonGrid>
       <CreateCounterModal sectionCode={sectionCode} onSubmit={updateList}/>
-      <CreateSectionModal fatherSectionCode={sectionCode}/>
     </>
   );
 };

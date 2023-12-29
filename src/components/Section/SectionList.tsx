@@ -5,6 +5,7 @@ import { SectionStructure } from '../../types/DataType';
 import SectionBox from './SectionBox';
 import { OnSelectSection } from '../../types/SectionType';
 import { useHistory } from 'react-router';
+import CreateSectionModal from './CreateSectionModal';
 
 export type SectionListInput = {
   onSelect?: OnSelectSection;
@@ -28,8 +29,8 @@ const SectionList: React.FC<SectionListInput> = () => {
       const _listSections: ReactElement[] = [];
       for(let i=0; i<sections.length; i++)
         _listSections.push(
-            <IonRow>
-              <SectionBox sectionStructure={sections[i]} onClick={_onSelect} key={i}/>  
+            <IonRow key={i}>
+              <SectionBox sectionStructure={sections[i]} onClick={_onSelect} />  
             </IonRow>
           )
       setListSection(_listSections);
@@ -41,6 +42,9 @@ const SectionList: React.FC<SectionListInput> = () => {
 
   return (
     <IonGrid>
+      <IonRow>
+        <CreateSectionModal/>
+      </IonRow>
       {listSections}
     </IonGrid>
 

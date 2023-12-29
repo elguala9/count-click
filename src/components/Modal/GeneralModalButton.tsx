@@ -35,7 +35,7 @@ const GeneralModalButton: React.FC<CreateCounterModalButtonInput> = ({ modalTitl
       <GeneralModal isOpen={isOpen} onClose={onClose} modalTitle={modalTitle} buttonSubmitLabel={buttonSubmitLabel} onSubmitModal={_onSubmitModal}>
         {children}
       </GeneralModal>
-      <IonButton onClick={onClick}>
+      <IonButton onClick={onClick} fill="outline">
         {buttonLabel}
       </IonButton>
     </>

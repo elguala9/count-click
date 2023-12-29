@@ -50,7 +50,7 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
 
   return (
     <GeneralModalButton modalTitle={'Create a Section'} buttonLabel={"Create Section Modal"} 
-    onSubmitModal={onSubmitModal} buttonSubmitLabel={"Create Section"}>
+      onSubmitModal={onSubmitModal} buttonSubmitLabel={"Create Section"}>
       <IonCard>
         <IonCardHeader>
           Create Section

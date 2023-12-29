@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSectionData } from '../../hooks/HooksData';
 import { SectionCode } from '../../types/SectionType';
 import SectionHandler, { SectionHandlerInput } from './SectionHandler';
+import { IonGrid } from '@ionic/react';
 
 type SectionPageInput =  {
   sectionCode: SectionCode
@@ -14,7 +15,6 @@ const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
   const  { retriveSection } = useSectionData();
 
   useEffect(()=>{
-    console.log("loop");
     retriveSection(sectionCode).then(({found})=>{
       if(found){
         const _sectionHandlerInput: SectionHandlerInput = { sectionCode } as SectionHandlerInput;
@@ -26,11 +26,9 @@ const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
   }, [retriveSection, sectionCode])
 
   return (
-    <>
+    <IonGrid fixed={true}>
       <SectionHandler {...sectionHandlersInput}/>
-      
-    </>
-    
+    </IonGrid>
   );
 };
 

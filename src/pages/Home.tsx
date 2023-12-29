@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>CounterMap</IonTitle>
+          <IonTitle>Home Page</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -21,7 +21,6 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <SectionList/>
-        <CreateSectionModal/>
         <TempCleanStorage/>
       </IonContent>
     </IonPage>
