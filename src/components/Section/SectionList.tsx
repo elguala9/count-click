@@ -1,11 +1,12 @@
-import { IonGrid, IonLoading, IonRow } from '@ionic/react';
+import { IonGrid, IonRow, IonToggle, useIonLoading } from '@ionic/react';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { useLoading } from '../../hooks/HookLoading';
 import { useSectionData } from '../../hooks/HooksData';
 import { SectionStructure } from '../../types/DataType';
-import SectionBox from './SectionBox';
 import { OnSelectSection } from '../../types/SectionType';
-import { useHistory } from 'react-router';
 import CreateSectionModal from './CreateSectionModal';
+import SectionBox from './SectionBox';
 
 export type SectionListInput = {
   onSelect?: OnSelectSection;
@@ -14,36 +15,52 @@ export type SectionListInput = {
 // A list of all the sections
 const SectionList: React.FC<SectionListInput> = () => {
 
-  const [loadingRetriveSections, setLoadingRetriveSections] = useState<boolean>(true);
   const [ listSections, setListSection ] = useState<ReactElement[]>([])
   const { retriveSectionsArray } = useSectionData();
   const history = useHistory();
+  const [ subSectionVisibility, setSubSectionVisibility ] = useState<boolean>(false)
+  const { presentLoading, dismissLoading} = useLoading()
+  const [present, dismiss] = useIonLoading();
 
-  const _onSelect: OnSelectSection = useCallback((x: SectionStructure)=>{
-    history.push("SectionPage/" + x.sectionCode)
+
+  const _onSelect: OnSelectSection = useCallback((sectionStructure: SectionStructure)=>{
+    history.push("SectionPage/" + sectionStructure.sectionCode)
   }, [history]);
 
-  useEffect(()=>{
-    setLoadingRetriveSections(true);
-    retriveSectionsArray().then((sections: SectionStructure[])=>{
-      const _listSections: ReactElement[] = [];
-      for(let i=0; i<sections.length; i++)
+  const updateListSections = useCallback(async ()=>{
+    await presentLoading();
+    const sections: SectionStructure[] = await retriveSectionsArray()
+    
+    const _listSections: ReactElement[] = [];
+    for(let i=0; i<sections.length; i++)
+      if(subSectionVisibility || sections[i].isSubSection === false)
         _listSections.push(
             <IonRow key={i}>
               <SectionBox sectionStructure={sections[i]} onClick={_onSelect} />  
             </IonRow>
-          )
-      setListSection(_listSections);
-    }).finally(()=>setLoadingRetriveSections(false))
-  }, [_onSelect, retriveSectionsArray])
+          ) 
+    await dismissLoading()
+    setListSection(_listSections);
+  }, [presentLoading, retriveSectionsArray, dismissLoading, subSectionVisibility, _onSelect]);
 
-  if(loadingRetriveSections)
-    return <IonLoading/>
+  useEffect(()=>{
+    updateListSections();
+  }, [updateListSections])
+
+
+  const onChangeVisibility = useCallback(async ()=>{
+    await presentLoading();
+    setSubSectionVisibility(()=>!subSectionVisibility)
+    await dismissLoading()
+  }, [dismissLoading, presentLoading, subSectionVisibility]);
 
   return (
     <IonGrid>
       <IonRow>
-        <CreateSectionModal/>
+        <IonToggle onIonChange={onChangeVisibility} checked={subSectionVisibility}>SubSection Visible</IonToggle>   
+      </IonRow>
+      <IonRow>
+        <CreateSectionModal onSubmit={updateListSections}/>
       </IonRow>
       {listSections}
     </IonGrid>

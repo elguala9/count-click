@@ -37,13 +37,16 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
       locked: true,
       sectionName: sectionName,
       sectionCode: await hashString(sectionName),
-      subSectionCodeList: []
+      subSectionCodeList: [],
+      isSubSection: false
     }
     // add the section created to the father
-    if(fatherSectionCode !== undefined)
+    if(fatherSectionCode !== undefined){
       await updateSubSectionList(sectionStructure, fatherSectionCode)
+      sectionStructure.isSubSection = true;
+    }
 
-    createSection(sectionStructure)
+    await createSection(sectionStructure)
     if(onSubmit !== undefined)
       onSubmit();
   }, [createSection, fatherSectionCode, onSubmit, sectionName, updateSubSectionList])

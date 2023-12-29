@@ -6,6 +6,7 @@ export type SectionStructure = {
     sectionCode: SectionCode;
     counters: CounterCode[];
     locked: boolean;
+    isSubSection: boolean;
     //sectionStructure? : SectionStructure;
     subSectionCodeList: SectionCode[];
 }

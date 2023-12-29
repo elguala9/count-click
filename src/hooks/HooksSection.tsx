@@ -13,7 +13,7 @@ export function useSectionFunctions() {
         const { found } = await retriveSection(sectionStructure.sectionCode);
         if(found)
             throw new DOMException("Section " + sectionStructure.sectionCode + " already exist");
-        setSection(sectionStructure);
+        await setSection(sectionStructure);
     }, [retriveSection, setSection]);
 
     const getSection = useCallback(async (sectionCode: SectionCode)=>{
