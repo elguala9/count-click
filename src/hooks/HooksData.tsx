@@ -50,9 +50,15 @@ export function useSectionData() {
         await storage.set(SectionRootKey, sections);
     }, [retriveSectionsMap]);
 
+    const deleteSection = useCallback(async (sectionCode: SectionCode)=>{
+        const sections: SectionMap = await retriveSectionsMap();
+        sections.delete(sectionCode);
+        await storage.set(SectionRootKey, sections);
+    }, [retriveSectionsMap]);
+
     return useMemo(()=>{
-        return {retriveSection, setSection, retriveSectionsMap, retriveSectionsArray};
-    }, [retriveSection, setSection, retriveSectionsMap, retriveSectionsArray])
+        return {retriveSection, setSection, retriveSectionsMap, retriveSectionsArray, deleteSection};
+    }, [retriveSection, setSection, retriveSectionsMap, retriveSectionsArray, deleteSection])
 
 }
 
@@ -90,10 +96,15 @@ export function useCounterData(){
         await storage.set(CounterRootKey, counterMap);
     }, [retriveCountersMap]);
 
+    const deleteCounter = useCallback(async (counterCode: SectionCode)=>{
+        const counterMap: CounterMap = await retriveCountersMap();
+        counterMap.delete(counterCode);
+        await storage.set(CounterRootKey, counterMap);
+    }, [retriveCountersMap]);
 
     return useMemo(()=>{
-        return {retriveCountersMap, retriveCountersIterableKeys, retriveArrayKeys, retriveCounter, setCounter};
-    }, [retriveArrayKeys, retriveCounter, retriveCountersIterableKeys, retriveCountersMap, setCounter])
+        return {retriveCountersMap, retriveCountersIterableKeys, retriveArrayKeys, retriveCounter, setCounter, deleteCounter};
+    }, [retriveArrayKeys, retriveCounter, retriveCountersIterableKeys, retriveCountersMap, setCounter, deleteCounter])
 }
 
 

@@ -1,13 +1,14 @@
 import { useCallback, useMemo } from "react";
 import { SectionStructure } from "../types/DataType";
 import { SectionCode } from "../types/SectionType";
-import { useCounterTotal } from "./HooksCounter";
+import { useCounterFunctions, useCounterTotal } from "./HooksCounter";
 import { useSectionData } from "./HooksData";
 
 // hook utility for section
 export function useSectionFunctions() {
 
-    const  { retriveSection, setSection } = useSectionData();
+    const  { retriveSection, setSection, deleteSection } = useSectionData();
+    const { removeCounter } = useCounterFunctions();
 
     const createSection = useCallback(async (sectionStructure: SectionStructure)=>{
         const { found } = await retriveSection(sectionStructure.sectionCode);
@@ -28,6 +29,17 @@ export function useSectionFunctions() {
         fatherSectionStructure.subSectionCodeList.push(sectionStructure.sectionCode);
         setSection(fatherSectionStructure)
     }, [getSection, setSection]);
+
+    const removeSection = useCallback(async (sectionCode: SectionCode)=>{
+        const sectionStructure = await getSection(sectionCode);
+        deleteSection(sectionStructure.sectionCode);
+        for(let i=0; i<sectionStructure.counters.length; i++){
+            removeCounter(sectionStructure.counters[i]);
+            for(let i=0; i<sectionStructure.subSectionCodeList.length; i++)
+                removeSection(sectionStructure.subSectionCodeList[i])
+        }
+    }, [deleteSection, getSection, removeCounter]);
+
 
     return useMemo(()=>{
         return { getSection, createSection, updateSubSectionList }

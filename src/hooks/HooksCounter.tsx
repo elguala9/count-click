@@ -27,7 +27,7 @@ export function useCounterClick(counterCode: string, counterValue: number, onCha
 // utility function for the counters
 export function useCounterFunctions() {
 
-    const { retriveCounter, setCounter } = useCounterData()
+    const { retriveCounter, setCounter, deleteCounter } = useCounterData()
     const { retriveSection, setSection } = useSectionData()
     
 
@@ -65,9 +65,15 @@ export function useCounterFunctions() {
         return _counterList;
     }, [getCounter]);
 
+    const removeCounter = useCallback(async (counterCode: CounterCode)=>{
+        const counterStructure = await getCounter(counterCode);
+        deleteCounter(counterStructure.counterCode);
+
+    }, [deleteCounter, getCounter]);
+
     return useMemo(()=>{
-        return {getCounter, getCounterList, createCounter, updateTotalCounter}
-    }, [getCounter, getCounterList, createCounter, updateTotalCounter]);
+        return {getCounter, getCounterList, createCounter, updateTotalCounter, removeCounter}
+    }, [getCounter, getCounterList, createCounter, updateTotalCounter, removeCounter]);
 }
 
 export function useCounterTotal() {
