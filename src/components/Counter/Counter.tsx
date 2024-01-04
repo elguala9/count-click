@@ -7,7 +7,7 @@ type CounterInput = {
   children: ReactElement;
 }
 
-// structure of a counter. In this component we will be abel to see the counter and the buttons to change the counter
+// structure of a counter. In this component we will be able to see the counter and the buttons to change the counter
 const Counter: React.FC<CounterInput> = ({children, onClick}) => {
 
   const onClickMinus = useCallback(()=>{

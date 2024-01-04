@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { CounterCode, OnChangeCounter } from "../types/CounterType";
-import { CounterStructure } from "../types/DataType";
+import { CounterStructure, SectionStructure } from "../types/DataType";
 import { SectionCode } from "../types/SectionType";
 import { useCounterData, useSectionData } from "./HooksData";
 import { useSectionFunctions } from "./HooksSection";
@@ -65,11 +65,14 @@ export function useCounterFunctions() {
         return _counterList;
     }, [getCounter]);
 
-    const removeCounter = useCallback(async (counterCode: CounterCode)=>{
+    const removeCounter = useCallback(async (counterCode: CounterCode, sectionStructure: SectionStructure)=>{
         const counterStructure = await getCounter(counterCode);
         deleteCounter(counterStructure.counterCode);
-
-    }, [deleteCounter, getCounter]);
+        //I need to delete the counter also from the list of the section
+        const index = sectionStructure.counters.indexOf(counterCode);
+        sectionStructure.counters.splice(index, 1);
+        setSection(sectionStructure);
+    }, [deleteCounter, getCounter, setSection]);
 
     return useMemo(()=>{
         return {getCounter, getCounterList, createCounter, updateTotalCounter, removeCounter}

@@ -32,18 +32,18 @@ export function useSectionFunctions() {
 
     const removeSection = useCallback(async (sectionCode: SectionCode)=>{
         const sectionStructure = await getSection(sectionCode);
-        deleteSection(sectionStructure.sectionCode);
         for(let i=0; i<sectionStructure.counters.length; i++){
-            removeCounter(sectionStructure.counters[i]);
+            removeCounter(sectionStructure.counters[i], sectionStructure);
             for(let i=0; i<sectionStructure.subSectionCodeList.length; i++)
                 removeSection(sectionStructure.subSectionCodeList[i])
         }
+        deleteSection(sectionStructure.sectionCode);
     }, [deleteSection, getSection, removeCounter]);
 
 
     return useMemo(()=>{
-        return { getSection, createSection, updateSubSectionList }
-    }, [getSection, createSection, updateSubSectionList]);
+        return { getSection, createSection, updateSubSectionList, removeSection }
+    }, [getSection, createSection, updateSubSectionList, removeSection]);
 }
 
 export function useSectionTotal() {
