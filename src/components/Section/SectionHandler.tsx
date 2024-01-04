@@ -5,6 +5,7 @@ import { OnChangeCounter, OnChangeCounterinput } from '../../types/CounterType';
 import { SectionStructure } from '../../types/DataType';
 import Section from './Section';
 import CreateSectionModal from './CreateSectionModal';
+import { useLoading } from '../../hooks/HookLoading';
 
 export type SectionHandlerInput =  {
   onChange?: OnChangeCounter;
@@ -18,7 +19,7 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
   const [sectionList, setSectionList] = useState<ReactElement[]>([]);
   const [ sectionStructure, setSectionStructure ] = useState<SectionStructure>();
   const { getSection } = useSectionFunctions()
-
+  const { presentLoading, dismissLoading} = useLoading()
   const { getTotalValueOfSection } = useSectionTotal()
 
   const _onChange = useCallback((input: OnChangeCounterinput)=>{ 

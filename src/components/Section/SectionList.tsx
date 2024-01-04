@@ -19,9 +19,7 @@ const SectionList: React.FC<SectionListInput> = () => {
   const { retriveSectionsArray } = useSectionData();
   const history = useHistory();
   const [ subSectionVisibility, setSubSectionVisibility ] = useState<boolean>(false)
-  const { presentLoading, dismissLoading} = useLoading()
-  const [present, dismiss] = useIonLoading();
-
+  const { presentLoading, dismissLoading, loadingElement} = useLoading()
 
   const _onSelect: OnSelectSection = useCallback((sectionStructure: SectionStructure)=>{
     history.push("SectionPage/" + sectionStructure.sectionCode)
@@ -55,16 +53,18 @@ const SectionList: React.FC<SectionListInput> = () => {
   }, [dismissLoading, presentLoading, subSectionVisibility]);
 
   return (
-    <IonGrid>
-      <IonRow>
-        <IonToggle onIonChange={onChangeVisibility} checked={subSectionVisibility}>SubSection Visible</IonToggle>   
-      </IonRow>
-      <IonRow>
-        <CreateSectionModal onSubmit={updateListSections}/>
-      </IonRow>
-      {listSections}
-    </IonGrid>
-
+    <>
+      <IonGrid>
+        <IonRow>
+          <IonToggle onIonChange={onChangeVisibility} checked={subSectionVisibility}>SubSection Visible</IonToggle>   
+        </IonRow>
+        <IonRow>
+          <CreateSectionModal onSubmit={updateListSections}/>
+        </IonRow>
+        {listSections}
+      </IonGrid>
+      {loadingElement}
+    </>
   );
 };
 

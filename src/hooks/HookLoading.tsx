@@ -1,25 +1,26 @@
-import { useIonLoading } from "@ionic/react";
-import { useCallback, useMemo } from "react";
+import { IonLoading } from "@ionic/react";
+import React, { useCallback, useMemo, useState } from "react";
 
 // hook to hanbdle the loading
 export function useLoading() {
-    const [present, dismiss] = useIonLoading();
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("");
 
     const presentLoading = useCallback(async (message?: string)=>{
         console.log("Presenting");
-        return await present({
-            message,
-            spinner: "dots",
-            //duration: 3000
-          })
-    }, [present]);
+        setMessage(message ?? "")
+        setOpen(true);
+    }, []);
 
     const dismissLoading = useCallback(async ()=>{
         console.log("Dismissing");
-        await dismiss()
-    }, [dismiss]);
+        setMessage("")
+        setOpen(false);
+    }, []);
+
+    const loadingElement = useMemo(()=><IonLoading isOpen={open} spinner={"dots"} message={message}/>, [message, open])
 
     return useMemo(()=>{
-        return {presentLoading, dismissLoading};
-    }, [presentLoading, dismissLoading])
+        return {presentLoading, dismissLoading, loadingElement};
+    }, [presentLoading, dismissLoading, loadingElement])
 }
