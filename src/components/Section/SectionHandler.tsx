@@ -6,6 +6,7 @@ import { SectionStructure } from '../../types/DataType';
 import Section from './Section';
 import CreateSectionModal from './CreateSectionModal';
 import { useLoading } from '../../hooks/HookLoading';
+import DeleteSectionButton from './DeleteSectionButton';
 
 export type SectionHandlerInput =  {
   onChange?: OnChangeCounter;
@@ -62,7 +63,8 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
       <Section onChange={_onChange} 
         sectionCode={sectionCode} 
         sectionTotal={sectionTotal}
-        sectionName={sectionStructure?.sectionName ?? ""}>
+        sectionName={sectionStructure?.sectionName ?? ""}
+        isSubsection={sectionStructure?.isSubSection ?? false}>
           <CreateSectionModal fatherSectionCode={sectionCode} onSubmit={sectionHandlerList}/>
       </Section>
       <IonRow>

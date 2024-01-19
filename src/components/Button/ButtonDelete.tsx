@@ -5,10 +5,11 @@ import ConfirmModal from '../Modal/ConfirmModal';
 
 type ButtonDeleteInput = {
   onClick: ()=>void;
+  label?: string;
 }
 
 // Button for deleting
-const ButtonDelete: React.FC<ButtonDeleteInput> = ({onClick}) => {
+const ButtonDelete: React.FC<ButtonDeleteInput> = ({onClick, label}) => {
 
   const [ open, setOpen ] = useState(false);
 
@@ -20,6 +21,7 @@ const ButtonDelete: React.FC<ButtonDeleteInput> = ({onClick}) => {
   return (
     <>
       <IonButton onClick={()=>setOpen(true)} color={'danger'}>
+        {label}
         <IonIcon icon={trashBinOutline}/>
       </IonButton>
       <ConfirmModal label={"Delete"} isOpen={open} onCancel={()=>setOpen(false)} onConfirm={onConfirm}/>

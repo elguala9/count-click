@@ -4,6 +4,7 @@ import { OnChangeCounter } from '../../types/CounterType';
 import { SectionCode } from '../../types/SectionType';
 import CounterListModal from '../Counter/CounterListModal';
 import CounterList from '../Counter/CounterList';
+import DeleteSectionButton from './DeleteSectionButton';
 
 type SectionInput = {
   sectionCode: SectionCode,
@@ -11,10 +12,11 @@ type SectionInput = {
   onChange: OnChangeCounter
   sectionTotal: number;
   children: ReactElement;
+  isSubsection: boolean;
 }
 
 // A section that contain all the information about the counters and the actual counter
-const Section: React.FC<SectionInput> = ({sectionCode, onChange, sectionTotal, sectionName, children}) => {
+const Section: React.FC<SectionInput> = ({sectionCode, onChange, sectionTotal, sectionName, children, isSubsection}) => {
 
   const [isOpen, setIsOpen ] = useState(false);
 
@@ -34,6 +36,7 @@ const Section: React.FC<SectionInput> = ({sectionCode, onChange, sectionTotal, s
       </IonCard>
       <IonModal isOpen={isOpen} onWillDismiss={()=>setIsOpen(false)}>
         <CounterList sectionCode={sectionCode} onChange={onChange}/>
+        {isSubsection === true ? <DeleteSectionButton sectionCode={sectionCode} label='Delete Section' onDelete={()=>setIsOpen(false)}/> : <></> }
         {children}
       </IonModal>
     </>
