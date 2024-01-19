@@ -21,16 +21,19 @@ const CounterList: React.FC<CounterListInput> = ({sectionCode, onChange}) => {
 
   const updateList = useCallback(async ()=>{
     const sectionStructure = await getSection(sectionCode);
+    console.log("updateList", sectionStructure);
     const { counters } = await getTotalAndCounterListFromSectionCode(sectionCode)
+    console.log("updateList", counters);
     const _list: ReactElement[] = [];
     for(let i=0; i<counters.length; i++)
       _list.push(
-        <CounterHandler {...counters[i]} onChange={onChange} key={i} sectionStructure={sectionStructure}/>
+        <CounterHandler {...counters[i]} onChange={onChange} key={i} sectionStructure={sectionStructure} onDelete={updateList}/>
       );
     setList(_list);
   }, [getSection, getTotalAndCounterListFromSectionCode, onChange, sectionCode])
 
   useEffect(()=>{
+    console.log("useEffect CounterList");
     updateList();  
   }, [updateList]);
     
