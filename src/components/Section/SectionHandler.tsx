@@ -27,7 +27,7 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
     setSectionTotal((p)=>p+input.change)
     if(onChange !== undefined)
       onChange(input);
-  }, [onChange, sectionTotal])
+  }, [onChange])
 
   const sectionHandlerList = useCallback(()=>{
     const _list: ReactElement[] = [];
