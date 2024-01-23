@@ -24,9 +24,16 @@ export function useSectionFunctions() {
         return section;
     }, [retrieveSection]);
 
-    const updateSubSectionList = useCallback(async (sectionStructure: SectionStructure, fatherSectionCode: SectionCode)=>{
+    const addSectionToSubSectionList = useCallback(async (sectionStructure: SectionStructure, fatherSectionCode: SectionCode)=>{
         const fatherSectionStructure = await getSection(fatherSectionCode)
         fatherSectionStructure.subSectionCodeList.push(sectionStructure.sectionCode);
+        setSection(fatherSectionStructure)
+    }, [getSection, setSection]);
+
+    const removeSectionFromSubSectionList = useCallback(async (sectionCode: SectionCode, fatherSectionCode: SectionCode)=>{
+        const fatherSectionStructure = await getSection(fatherSectionCode)
+        const index = fatherSectionStructure.subSectionCodeList.indexOf(sectionCode);
+        fatherSectionStructure.subSectionCodeList.splice(index, 1);
         setSection(fatherSectionStructure)
     }, [getSection, setSection]);
 
@@ -42,8 +49,8 @@ export function useSectionFunctions() {
 
 
     return useMemo(()=>{
-        return { getSection, createSection, updateSubSectionList, removeSection }
-    }, [getSection, createSection, updateSubSectionList, removeSection]);
+        return { getSection, createSection, addSectionToSubSectionList, removeSection }
+    }, [getSection, createSection, addSectionToSubSectionList, removeSection]);
 }
 
 export function useSectionTotal() {
@@ -55,11 +62,11 @@ export function useSectionTotal() {
         if(section === undefined)
             return 0;
         let {totalValue} = await getTotalAndListFromCounterList(section.counters);
-        let _setionStructure: SectionStructure;
+        let _sectionStructure: SectionStructure;
        
         for(let i=0; i < section?.subSectionCodeList.length;  i++){
-            _setionStructure = await getSection(section?.subSectionCodeList[i]);
-            totalValue += await getTotalValueOfSection(_setionStructure);
+            _sectionStructure = await getSection(section?.subSectionCodeList[i]);
+            totalValue += await getTotalValueOfSection(_sectionStructure);
         }
 
         return totalValue;

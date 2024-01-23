@@ -18,7 +18,7 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
   const [sectionName, setSectionName] = useState<string>("");
   const [formError, setFormError] = useState<boolean>(true);
   const { retrieveSection} = useSectionData();
-  const { createSection, updateSubSectionList } = useSectionFunctions();
+  const { createSection, addSectionToSubSectionList } = useSectionFunctions();
 
   const onInput = useCallback(async (event: any)=>{
     setFormError(false);
@@ -38,18 +38,19 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
       sectionName: sectionName,
       sectionCode: await hashString(sectionName),
       subSectionCodeList: [],
-      isSubSection: false
+      isSubSection: false,
+      fatherSection: fatherSectionCode
     }
     // add the section created to the father
     if(fatherSectionCode !== undefined){
-      await updateSubSectionList(sectionStructure, fatherSectionCode)
+      await addSectionToSubSectionList(sectionStructure, fatherSectionCode)
       sectionStructure.isSubSection = true;
     }
 
     await createSection(sectionStructure)
     if(onSubmit !== undefined)
       onSubmit();
-  }, [createSection, fatherSectionCode, onSubmit, sectionName, updateSubSectionList])
+  }, [createSection, fatherSectionCode, onSubmit, sectionName, addSectionToSubSectionList])
 
   return (
     <GeneralModalButton modalTitle={'Create a Section'} buttonLabel={"Create Section Modal"} 

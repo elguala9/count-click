@@ -7,6 +7,7 @@ export type SectionStructure = {
     counters: CounterCode[];
     locked: boolean;
     isSubSection: boolean;
+    fatherSection?: SectionCode;
     //sectionStructure? : SectionStructure;
     subSectionCodeList: SectionCode[];
 }
@@ -18,7 +19,7 @@ export type CounterStructure = {
     counterCode: CounterCode;
     value: number;
     locked: boolean;
-    // counter from which dectrat when this counter is increased
+    // counter from which detract when this counter is increased // TO IMPLEMENT
     connectedCounter?: CounterCode;
 }
 
