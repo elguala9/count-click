@@ -16,7 +16,7 @@ export type SectionListInput = {
 const SectionList: React.FC<SectionListInput> = () => {
 
   const [ listSections, setListSection ] = useState<ReactElement[]>([])
-  const { retriveSectionsArray } = useSectionData();
+  const { retrieveSectionsArray } = useSectionData();
   const history = useHistory();
   const [ subSectionVisibility, setSubSectionVisibility ] = useState<boolean>(false)
   const { presentLoading, dismissLoading, loadingElement} = useLoading()
@@ -27,7 +27,7 @@ const SectionList: React.FC<SectionListInput> = () => {
 
   const updateListSections = useCallback(async ()=>{
     await presentLoading();
-    const sections: SectionStructure[] = await retriveSectionsArray()
+    const sections: SectionStructure[] = await retrieveSectionsArray()
     
     const _listSections: ReactElement[] = [];
     for(let i=0; i<sections.length; i++)
@@ -39,7 +39,7 @@ const SectionList: React.FC<SectionListInput> = () => {
           ) 
     await dismissLoading()
     setListSection(_listSections);
-  }, [presentLoading, retriveSectionsArray, dismissLoading, subSectionVisibility, _onSelect]);
+  }, [presentLoading, retrieveSectionsArray, dismissLoading, subSectionVisibility, _onSelect]);
 
   useEffect(()=>{
     updateListSections();

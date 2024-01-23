@@ -27,13 +27,13 @@ export function useCounterClick(counterCode: string, counterValue: number, onCha
 // utility function for the counters
 export function useCounterFunctions() {
 
-    const { retriveCounter, setCounter, deleteCounter } = useCounterData()
-    const { retriveSection, setSection } = useSectionData()
+    const { retrieveCounter, setCounter, deleteCounter } = useCounterData()
+    const { retrieveSection, setSection } = useSectionData()
     
 
     const createCounter = useCallback(async (sectionCode: SectionCode, counterStructure: CounterStructure)=>{
-        const {found: foundCounter} = await retriveCounter(counterStructure.counterCode);
-        const {found: foundSection, section} = await retriveSection(sectionCode);
+        const {found: foundCounter} = await retrieveCounter(counterStructure.counterCode);
+        const {found: foundSection, section} = await retrieveSection(sectionCode);
         if(foundCounter)
             throw new DOMException("Counter " + counterStructure.counterCode + " already exist");
         if(foundSection === false)
@@ -42,14 +42,14 @@ export function useCounterFunctions() {
         // TO DO: I need al limit to the counters in a section
         section.counters.push(counterStructure.counterCode);
         await setSection(section);
-    }, [retriveCounter, retriveSection, setCounter, setSection]);
+    }, [retrieveCounter, retrieveSection, setCounter, setSection]);
 
     const getCounter = useCallback(async (counterCode: CounterCode)=>{
-        const { counter, found} = await retriveCounter(counterCode);
+        const { counter, found} = await retrieveCounter(counterCode);
         if(found === false)
             throw new DOMException("Counter " + counterCode + " not found");
         return counter;
-    }, [retriveCounter]);
+    }, [retrieveCounter]);
 
     const updateTotalCounter = useCallback(async (counterCode: CounterCode, value: number)=>{
         const counterStructure = await getCounter(counterCode);

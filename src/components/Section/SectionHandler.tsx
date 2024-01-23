@@ -1,7 +1,7 @@
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useSectionFunctions, useSectionTotal } from '../../hooks/HooksSection';
-import { OnChangeCounter, OnChangeCounterinput } from '../../types/CounterType';
+import { OnChangeCounter, OnChangeCounterInput } from '../../types/CounterType';
 import { SectionStructure } from '../../types/DataType';
 import Section from './Section';
 import CreateSectionModal from './CreateSectionModal';
@@ -13,7 +13,7 @@ export type SectionHandlerInput =  {
   sectionCode: string;
 }
 
-// An handler of the section. It handle the total counnter and the evetnual subsection
+// An handler of the section. It handle the total counter and the eventual subsection
 const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) => {
 
   const [sectionTotal, setSectionTotal] = useState<number>(0);
@@ -23,8 +23,8 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
   const { presentLoading, dismissLoading} = useLoading()
   const { getTotalValueOfSection } = useSectionTotal()
 
-  const _onChange = useCallback((input: OnChangeCounterinput)=>{ 
-    setSectionTotal(()=>sectionTotal+input.change)
+  const _onChange = useCallback((input: OnChangeCounterInput)=>{ 
+    setSectionTotal((p)=>p+input.change)
     if(onChange !== undefined)
       onChange(input);
   }, [onChange, sectionTotal])

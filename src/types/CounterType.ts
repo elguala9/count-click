@@ -1,7 +1,7 @@
-export type OnChangeCounterinput = {
+export type OnChangeCounterInput = {
     counterCode: CounterCode, newValue: number, change: number
 };
 
-export type OnChangeCounter = (input: OnChangeCounterinput)=>void;
+export type OnChangeCounter = (input: OnChangeCounterInput)=>void;
 
 export type CounterCode = string;

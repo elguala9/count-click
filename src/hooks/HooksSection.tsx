@@ -7,22 +7,22 @@ import { useSectionData } from "./HooksData";
 // hook utility for section
 export function useSectionFunctions() {
 
-    const  { retriveSection, setSection, deleteSection } = useSectionData();
+    const  { retrieveSection, setSection, deleteSection } = useSectionData();
     const { removeCounter } = useCounterFunctions();
 
     const createSection = useCallback(async (sectionStructure: SectionStructure)=>{
-        const { found } = await retriveSection(sectionStructure.sectionCode);
+        const { found } = await retrieveSection(sectionStructure.sectionCode);
         if(found)
             throw new DOMException("Section " + sectionStructure.sectionCode + " already exist");
         await setSection(sectionStructure);
-    }, [retriveSection, setSection]);
+    }, [retrieveSection, setSection]);
 
     const getSection = useCallback(async (sectionCode: SectionCode)=>{
-        const { section, found} = await retriveSection(sectionCode);
+        const { section, found} = await retrieveSection(sectionCode);
         if(found === false)
             throw new DOMException("Section " + sectionCode + " not found");
         return section;
-    }, [retriveSection]);
+    }, [retrieveSection]);
 
     const updateSubSectionList = useCallback(async (sectionStructure: SectionStructure, fatherSectionCode: SectionCode)=>{
         const fatherSectionStructure = await getSection(fatherSectionCode)

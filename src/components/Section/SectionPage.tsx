@@ -8,14 +8,14 @@ type SectionPageInput =  {
   sectionCode: SectionCode
 }
 
-// The componenet that retrive the section from the data
+// The componenet that retrieve the section from the data
 const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
 
   const [ sectionHandlersInput, setSectionHandlersInput ] = useState<SectionHandlerInput>({ sectionCode } as SectionHandlerInput);
-  const  { retriveSection } = useSectionData();
+  const  { retrieveSection } = useSectionData();
 
   useEffect(()=>{
-    retriveSection(sectionCode).then(({found})=>{
+    retrieveSection(sectionCode).then(({found})=>{
       if(found){
         const _sectionHandlerInput: SectionHandlerInput = { sectionCode } as SectionHandlerInput;
         setSectionHandlersInput(_sectionHandlerInput);
@@ -23,7 +23,7 @@ const SectionPage: React.FC<SectionPageInput> = ({sectionCode}) => {
     })
     
 
-  }, [retriveSection, sectionCode])
+  }, [retrieveSection, sectionCode])
 
   return (
     <IonGrid fixed={true}>

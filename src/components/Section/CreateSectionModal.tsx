@@ -17,7 +17,7 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
 
   const [sectionName, setSectionName] = useState<string>("");
   const [formError, setFormError] = useState<boolean>(true);
-  const { retriveSection} = useSectionData();
+  const { retrieveSection} = useSectionData();
   const { createSection, updateSubSectionList } = useSectionFunctions();
 
   const onInput = useCallback(async (event: any)=>{
@@ -26,9 +26,9 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
     if(_sectionName.length === 0)
       return setFormError(true);
     setSectionName(_sectionName);
-    const {found} = await retriveSection(_sectionName);
+    const {found} = await retrieveSection(_sectionName);
     setFormError(found);
-  }, [retriveSection])
+  }, [retrieveSection])
 
   const onSubmitModal = useCallback(async ()=>{
     
