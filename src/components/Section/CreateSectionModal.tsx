@@ -17,7 +17,7 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
 
   const [sectionName, setSectionName] = useState<string>("");
   const [formError, setFormError] = useState<boolean>(true);
-  const { retrieveSection} = useSectionData();
+  const { retrieveSectionByName } = useSectionData();
   const { createSection, addSectionToSubSectionList } = useSectionFunctions();
 
   const onInput = useCallback(async (event: any)=>{
@@ -25,10 +25,12 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
     const _sectionName: string = event.target.value
     if(_sectionName.length === 0)
       return setFormError(true);
+    console.log("_sectionName:", _sectionName);
     setSectionName(_sectionName);
-    const {found} = await retrieveSection(_sectionName);
+    const {section, found} = await retrieveSectionByName(_sectionName);
+    console.log("section:", section, found);
     setFormError(found);
-  }, [retrieveSection])
+  }, [retrieveSectionByName])
 
   const onSubmitModal = useCallback(async ()=>{
     
@@ -54,12 +56,13 @@ const CreateSectionModal: React.FC<CreateSectionModalInput> = ({fatherSectionCod
 
   return (
     <GeneralModalButton modalTitle={'Create a Section'} buttonLabel={"Create Section Modal"} 
-      onSubmitModal={onSubmitModal} buttonSubmitLabel={"Create Section"}>
+      onSubmitModal={onSubmitModal} buttonSubmitLabel={"Create Section"}
+      submitDisabled={formError}>
       <IonCard>
         <IonCardHeader>
           Create Section
         </IonCardHeader>
-        <IonInput onIonInput={onInput}/>
+        <IonInput onIonInput={onInput} color={formError ? 'danger' : 'primary'}/>
       </IonCard>
     </GeneralModalButton>
   );
