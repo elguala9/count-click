@@ -48,6 +48,7 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
 
 
   useEffect(()=>{
+    console.log("loop");
     getSection(sectionCode).then((sectionStructure)=>{
       getTotalValueOfSection(sectionStructure).then((total)=>{
         setSectionTotal(total);
@@ -55,8 +56,13 @@ const SectionHandler: React.FC<SectionHandlerInput> = ({onChange, sectionCode}) 
 
       setSectionStructure(sectionStructure);
     })
+    
+  }, [getSection, getTotalValueOfSection, sectionCode]);
+
+  useEffect(()=>{
+    console.log("loop2");
     sectionHandlerList();
-  }, [getSection, getTotalValueOfSection, sectionCode, sectionHandlerList]);
+  }, [sectionHandlerList]);
 
   return (
     <>
