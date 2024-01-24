@@ -4,6 +4,7 @@ import { CounterRootKey, SectionRootKey } from "../const/Const";
 
 import { CounterStructure, CounterMap, SectionStructure, SectionMap } from "../types/DataType";
 import { SectionCode } from "../types/SectionType";
+import { hashString } from "../utility/HashUtility";
 
 export function useSectionData() {
 
@@ -40,9 +41,16 @@ export function useSectionData() {
 
     const retrieveSection = useCallback(async (sectionCode: SectionCode)=>{
         const sections: SectionMap = await retrieveSectionsMap();
-        const section = sections.get(sectionCode);
-        return {section: section ?? {} as SectionStructure, found: section === undefined ? false : true};
+        const _section = sections.get(sectionCode);
+        console.log("_section", _section); 
+        return {section: _section ?? {} as SectionStructure, found: _section === undefined ? false : true};
     }, [retrieveSectionsMap]);
+
+
+    const retrieveSectionByName = useCallback(async (sectionName: string)=>{
+        return retrieveSection(await hashString(sectionName));
+    }, [retrieveSection]);
+
 
     const setSection = useCallback(async (sectionStructure: SectionStructure)=>{
         const sections: SectionMap = await retrieveSectionsMap();
@@ -57,8 +65,8 @@ export function useSectionData() {
     }, [retrieveSectionsMap]);
 
     return useMemo(()=>{
-        return {retrieveSection, setSection, retrieveSectionsMap, retrieveSectionsArray, deleteSection};
-    }, [retrieveSection, setSection, retrieveSectionsMap, retrieveSectionsArray, deleteSection])
+        return {retrieveSection, setSection, retrieveSectionsMap, retrieveSectionsArray, deleteSection, retrieveSectionByName};
+    }, [retrieveSection, setSection, retrieveSectionsMap, retrieveSectionsArray, deleteSection, retrieveSectionByName])
 
 }
 

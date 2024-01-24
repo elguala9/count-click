@@ -8,10 +8,11 @@ export type GeneralModalInput = {
   children: ReactElement;
   onSubmitModal: ()=>void;
   buttonSubmitLabel: string;
+  disabled? : boolean;
 }
 
 // Component in which we can create a new counter
-const GeneralModal: React.FC<GeneralModalInput> = ({ isOpen, onClose, modalTitle, children, onSubmitModal, buttonSubmitLabel}) => {
+const GeneralModal: React.FC<GeneralModalInput> = ({ isOpen, onClose, modalTitle, children, onSubmitModal, buttonSubmitLabel, disabled}) => {
 
 
 
@@ -22,7 +23,7 @@ const GeneralModal: React.FC<GeneralModalInput> = ({ isOpen, onClose, modalTitle
         {modalTitle}
       </IonHeader>
       {children}
-      <IonButton onClick={onSubmitModal}>
+      <IonButton onClick={onSubmitModal} disabled={disabled}>
         {buttonSubmitLabel}
       </IonButton>
     </IonModal>

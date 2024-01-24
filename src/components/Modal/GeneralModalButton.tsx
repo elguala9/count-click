@@ -8,10 +8,12 @@ export type CreateCounterModalButtonInput = {
   buttonLabel: string;
   onSubmitModal: ()=>void;
   buttonSubmitLabel: string;
+  submitDisabled?: boolean;
+  disabled? : boolean;
 }
 
-// Component itha open the model that is used to create a new component
-const GeneralModalButton: React.FC<CreateCounterModalButtonInput> = ({ modalTitle, children, buttonLabel, onSubmitModal, buttonSubmitLabel}) => {
+// Component that open the model that is used to create a new component
+const GeneralModalButton: React.FC<CreateCounterModalButtonInput> = ({ modalTitle, children, buttonLabel, onSubmitModal, buttonSubmitLabel, submitDisabled, disabled}) => {
 
   const [ isOpen, setIsOpen ] = useState(false);
 
@@ -32,14 +34,14 @@ const GeneralModalButton: React.FC<CreateCounterModalButtonInput> = ({ modalTitl
 
   return (
     <>
-      <GeneralModal isOpen={isOpen} onClose={onClose} modalTitle={modalTitle} buttonSubmitLabel={buttonSubmitLabel} onSubmitModal={_onSubmitModal}>
+      <GeneralModal isOpen={isOpen} onClose={onClose} modalTitle={modalTitle} 
+      buttonSubmitLabel={buttonSubmitLabel} onSubmitModal={_onSubmitModal} disabled={submitDisabled}>
         {children}
       </GeneralModal>
-      <IonButton onClick={onClick} fill="outline">
+      <IonButton onClick={onClick} fill="outline" disabled={disabled}>
         {buttonLabel}
       </IonButton>
     </>
-
   );
 };
 
